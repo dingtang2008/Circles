@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:orientation="horizontal" >
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/title_bg" >
     
     <ImageView android:id="@+id/user_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="10dip"
         android:contentDescription="@string/user_image"
-        android:src="@drawable/loading_01"/>
+        android:src="@drawable/title_button_l"/>
     
     <TextView android:id="@+id/left_text"
         android:layout_width="wrap_content"
@@ -22,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="10dip"
         android:contentDescription="@string/mapView"
-        android:src="@drawable/loading_01"/>
+        android:src="@drawable/title_button_r"/>
 </RelativeLayout>

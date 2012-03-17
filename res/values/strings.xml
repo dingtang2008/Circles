@@ -4,6 +4,8 @@
     <string name="hello">hello</string>
     <string name="wait">Please wait to location</string>
     <string name="app_name">YuanQuan</string>
+    <string name="sort_by_time">时间排序</string>
+    <string name="sort_by_people">人气排序</string>
     <string name="user_image">用户头像</string>
     <string name="mapView">随便逛逛</string>
     <string name="activity_type">活动类型</string>
@@ -11,5 +13,6 @@
     <string name="activity_posters">活动海报</string>
     <string name="location_animation">定位动画</string>
     <string name="test">活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型</string>
+    
 
 </resources>

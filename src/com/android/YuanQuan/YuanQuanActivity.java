@@ -51,7 +51,7 @@ public class YuanQuanActivity extends Activity {
         super.onCreate(savedInstanceState);
         
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.main);
+        setContentView(R.layout.mainview);
         
         Timer timer = new Timer();   
         
@@ -59,8 +59,8 @@ public class YuanQuanActivity extends Activity {
         getWindow().setBackgroundDrawable(mDrawableBg);
         
         /*
-        pd = ProgressDialog.show(this, "请稍后..",
-				"正在收集你的个人信息...", true, false);*/
+        pd = ProgressDialog.show(this, "璇风◢鍚�.",
+				"姝ｅ湪鏀堕泦浣犵殑涓汉淇℃伅...", true, false);*/
         timer.schedule(task, 3000);
         
         iv = (ImageView)findViewById(R.id.anminationtest);

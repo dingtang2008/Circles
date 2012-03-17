@@ -3,7 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+     <include layout="@layout/title"
+        android:id="@+id/title" 
+        />
+     <include layout="@layout/header"
+        android:id="@+id/mheader" 
+        />
     <ListView android:layout_width="fill_parent" 
 		android:layout_height="wrap_content" 
 		android:dividerHeight="10dip"
