@@ -14,5 +14,34 @@
     <string name="location_animation">定位动画</string>
     <string name="test">活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型</string>
     
+    <string name="str_act_all">所有活动</string>
+    <string name="str_act_suggest">推荐活动</string>
+    <string name="str_act_music">音乐/演出</string>
+    <string name="str_act_life">生活/聚会</string>
+    <string name="str_act_sport">体育</string>
+    <string name="str_act_travel">旅行</string>
+    <string name="str_act_study">讲座/沙龙</string>
+    <string name="str_act_buy">二手买卖</string>
+    <string name="str_act_other">其他</string>
+    <string name="default_image">默认头像</string>
+    <string name="default_user_name">测试测试</string>
+    <string name="edit">编辑</string>
+    <string name="user_message_icon">用户消息按钮</string>
+    <string name="messages">用户消息</string>
+    <string name="my_favor_activity">我收藏的活动</string>
+    <string name="my_orginized_activity">我组织的活动</string>
+    <string name="my_joined_activity">我参加的活动</string>
+    <string name="my_favor_shops">我收藏的商铺</string>
+    <string name="my_friends">我的好友</string>
+    <string name="my_circles">我的圈子</string>
+    <string name="userinfo_edit_title">编辑个人信息</string>
+    <string name="login_username_hint">请输入账号</string>
+    <string name="login_userpwd_hint">请输入密码</string>
+    <string name="app_logo">应用LOG</string>
+    <string name="register">快速注册</string>
+    <string name="pwd_forget">忘记密码</string>
+    <string name="login">登录</string>
+    <string name="roaming">随便逛逛</string>
+    <string name="new_activity">发起活动</string>
 
 </resources>

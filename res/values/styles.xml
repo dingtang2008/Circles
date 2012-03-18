@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
-    <!-- Base application theme is the default theme. -->
-    <style name="Theme" parent="android:Theme">
+    <style name="WindowTitleBackground">  
+            <item name="android:background">@drawable/titlebg</item>  
     </style>
-    
 </resources>

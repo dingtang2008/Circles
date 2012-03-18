@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme" parent="android:Theme"></style>
+    <style name="XTheme" parent="android:Theme">      
+          
+        <!-- Window attributes -->     
+        <item name="android:windowTitleBackgroundStyle">@style/WindowTitleBackground</item>       
+    </style>
+</resources>

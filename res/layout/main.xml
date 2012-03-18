@@ -1,140 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:panel="http://schemas.android.com/apk/res/com.android.YuanQuan"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="#6BB61B">
-     <include layout="@layout/title"
-        android:id="@+id/title" 
-        />
-     <include layout="@layout/header"
-        android:id="@+id/mheader" 
-        />
-     
-<FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@drawable/green"
+    android:orientation="vertical" >
 
-    <com.android.YuanQuan.ScrollLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/ScrollLayoutTest"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+    <include
+        android:id="@+id/title"
+        layout="@layout/title" />
 
+    <include
+        android:id="@+id/mheader"
+        layout="@layout/header" />
 
-        <LinearLayout
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.android.YuanQuan.ScrollLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/ScrollLayoutTest"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="8dip"
-            android:paddingRight="8dip" >
+            android:layout_height="match_parent" >
 
-            <ListView
-                android:id="@+id/list"
+            <LinearLayout
+                android:id="@+id/userlayout"
                 android:layout_width="match_parent"
-                android:layout_height="0dip"
-                android:layout_weight="1"
-                android:stackFromBottom="true"
-                android:transcriptMode="normal" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/userText2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                <include
+                    android:id="@+id/login"
+                    layout="@layout/login_menu" />
+
+                <include
+                    android:id="@+id/userinfo"
+                    layout="@layout/user_info" 
+                    android:visibility="gone"/>
+            </LinearLayout>
 
             <ListView
                 android:id="@+id/mainlist"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:layout_weight="1"
+                android:background="#666666"
+                android:cacheColorHint="#00000000"
+                android:divider="@null"
                 android:stackFromBottom="true"
                 android:transcriptMode="normal" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FF00" >
+
+                <Button
+                    android:id="@+id/button1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Button1" />
+            </LinearLayout>
+        </com.android.YuanQuan.ScrollLayout>
+
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="#FF00" >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="0dip"
+            android:paddingRight="0dip" >
 
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="wrap_content"
+            <com.android.YuanQuan.Panel
+                android:id="@+id/topPanel"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Button1" />
-        </LinearLayout>
-        
-    </com.android.YuanQuan.ScrollLayout>
+                panel:animationDuration="800"
+                panel:closedHandle="@drawable/top_switcher_collapsed_background"
+                panel:content="@+id/panel_content"
+                panel:handle="@+id/panelHandle"
+                panel:linearFlying="true"
+                panel:openedHandle="@drawable/top_switcher_expanded_background"
+                android:paddingBottom="33dip"
+                panel:position="top"
+                panel:weight="65%p" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:paddingLeft="0dip"
-        android:paddingRight="0dip" >
+                <GridView
+                    android:id="@+id/panel_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/white"
+                    android:columnWidth="90dp"
+                    android:gravity="center"
+                    android:horizontalSpacing="10dp"
+                    android:numColumns="auto_fit"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="10dp" >
+                </GridView>
 
-        <com.android.YuanQuan.Panel
-            android:id="@+id/topPanel"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            panel:animationDuration="1500"
-            panel:closedHandle="@drawable/top_switcher_collapsed_background"
-            panel:content="@+id/panelContent"
-            panel:handle="@+id/panelHandle"
-            panel:linearFlying="true"
-            panel:openedHandle="@drawable/top_switcher_expanded_background"
-            android:paddingBottom="33dip"
-            panel:position="top"
-            panel:weight="65%p" >
+                <LinearLayout
+                    android:id="@+id/panelHandle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="33dip"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal" >
+                </LinearLayout>
+            </com.android.YuanQuan.Panel>
 
-            <LinearLayout
-                android:id="@+id/panelContent"
-                android:layout_width="fill_parent"
+            <RelativeLayout
+                android:id="@+id/bottomlayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-                <CheckBox
-                    android:layout_width="fill_parent"
-                    android:layout_height="60dip"
-                    android:background="#688"
-                    android:gravity="center"
-                    android:text="top check box" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:background="#329999"
-                    android:gravity="center"
-                    android:padding="4dip"
-                    android:text="test \ntest\ntest"
-                    android:textColor="#eee"
-                    android:textSize="16dip"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/panelHandle"
-                android:layout_width="wrap_content"
-                android:layout_height="33dip"
-                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="300dip"
                 android:orientation="horizontal" >
-            </LinearLayout>
-        </com.android.YuanQuan.Panel>
-        
-        <LinearLayout android:orientation="horizontal" 
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="280dip"
-    android:id="@+id/llayout" 
-    android:layout_width="wrap_content" 
-    android:layout_height="wrap_content" 
-    android:background="@drawable/guide_background"
-    >
-      <ImageView android:clickable="true" android:padding="5.0dip" android:layout_gravity="center_vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/guide_round" /> 
-  <ImageView android:clickable="true" android:padding="5.0dip" android:layout_gravity="center_vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/guide_round" /> 
-  <ImageView android:clickable="true" android:padding="5.0dip" android:layout_gravity="center_vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/guide_round" /> 
-</LinearLayout>
-    </LinearLayout>
 
-</FrameLayout>
+                <ImageView
+                    android:id="@+id/add_act"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:clickable="true"
+                    android:src="@drawable/add_act" />
+
+                <LinearLayout
+                    android:id="@+id/llayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/guide_background"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:clickable="true"
+                        android:padding="8.0dip"
+                        android:src="@drawable/guide_round" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:clickable="true"
+                        android:padding="8.0dip"
+                        android:src="@drawable/guide_round" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:clickable="true"
+                        android:padding="8.0dip"
+                        android:src="@drawable/guide_round" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>
