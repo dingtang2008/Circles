@@ -78,8 +78,6 @@ public class MainActivity extends Activity implements OnClickListener,
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
 		init();
 	}
@@ -165,21 +163,16 @@ public class MainActivity extends Activity implements OnClickListener,
 		((ListView) findViewById(R.id.main_userinfo_list))
 				.setAdapter(maininfoItems);
 
-		Spinner sp = (Spinner) findViewById(R.id.spinner1);
-		String[] mStrings = { "Abbaye de Belloc", "Abbaye du Mont des Cats",
-				"Abertam", "Abondance", "Ackawi", "Acorn", "Adelost",
-				"Affidelice au Chablis", "Afuega'l Pitu", "Airag", "Airedale",
-				"Aisy Cendre", "Allgauer Emmentaler", "Alverca", "Ambert",
-				"American Cheese", };
-		sp.setAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, mStrings));
+		Spinner sp = (Spinner) findViewById(R.id.select_spinner);
+		String[] mStrings = { "软件学院1", "软件学院2", "软件学院3", "软件学院4", "软件学院5", "软件学院6"};
+		ArrayAdapter spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, mStrings);
+		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		sp.setAdapter(spinnerAdapter);
+		sp.setSelection(3,true);
 
-		titleView = findViewById(R.id.title);
-		headerView = findViewById(R.id.mheader);
-		panelView = (Panel) findViewById(R.id.topPanel);
 		userView = (LinearLayout) findViewById(R.id.userlayout);
 		loginView = userView.findViewById(R.id.login);
-		userInfoView = userView.findViewById(R.id.userlayout);
+		userInfoView = userView.findViewById(R.id.userinfo);
 		loginButton = (Button) findViewById(R.id.signin_button);
 		loginButton.setOnClickListener(this);
 
@@ -192,16 +185,6 @@ public class MainActivity extends Activity implements OnClickListener,
 		mImageViews[mCurSel].setEnabled(true);
 		mImageViews[index].setEnabled(false);
 		mCurSel = index;
-
-		// if (mCurSel != 1){
-		// titleView.setVisibility(View.GONE);
-		// headerView.setVisibility(View.GONE);
-		// panelView.setVisibility(View.GONE);
-		// } else {
-		// titleView.setVisibility(View.VISIBLE);
-		// headerView.setVisibility(View.VISIBLE);
-		// panelView.setVisibility(View.VISIBLE);
-		// }
 	}
 
 	@Override

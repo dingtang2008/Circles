@@ -60,8 +60,8 @@ public class YuanQuanActivity extends Activity {
         getWindow().setBackgroundDrawable(mDrawableBg);
         
         /*
-        pd = ProgressDialog.show(this, "鐠囬鈼㈤崥锟�",
-				"濮濓絽婀弨鍫曟肠娴ｇ姷娈戞稉顏冩眽娣団剝浼�..", true, false);*/
+        pd = ProgressDialog.show(this, "閻犲洭顥熼埣銏ゅ触閿燂拷",
+				"婵繐绲藉﹢顏堝绩閸洘鑲犲ù锝囧Х濞堟垶绋夐鍐╃溄濞ｅ洠鍓濇导锟�.", true, false);*/
         timer.schedule(task, 3000);
         
         iv = (ImageView)findViewById(R.id.anminationtest);
@@ -71,7 +71,14 @@ public class YuanQuanActivity extends Activity {
         anim.start();
     }
     
-    /** Called when the activity is focused. */
+    @Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onRestart();
+		finish();
+	}
+
+	/** Called when the activity is focused. */
     public void onWindowFocus()
     {
     }

@@ -13,19 +13,12 @@
         android:layout_marginLeft="12dip"
         android:src="@drawable/title_button_l" />
 
-    <TextView
-        android:id="@+id/left_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="2dip"
-        android:text="@string/app_name" />
-
     <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="80dip"
+        android:id="@+id/select_spinner"
+        android:layout_width="150dip"
         android:layout_height="30dip"
         android:layout_marginRight="20dip"
+        android:layout_marginLeft="20dip"
         android:background="@drawable/green" />
 
     <ImageView
