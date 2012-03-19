@@ -101,7 +101,7 @@ public class CirclesActivity extends Activity {
 		if (!isNetworkAvailable(this)){
 			pd.dismiss();
 			Message message = new Message();   
-			message.what = YuanQuanService.MSG_Main_Activity;  
+			message.what = CirclesService.MSG_Main_Activity;  
 			message.obj = "";
 			handler.sendMessageDelayed(message, 1000);
 			Toast.makeText(this, "No networknow Please set wifi or 3G", Toast.LENGTH_SHORT).show();
@@ -197,7 +197,7 @@ public class CirclesActivity extends Activity {
 		Editor editor = mSharePreference.edit();
 		editor.putString(LOCATION_KEY, mLocationPlace);
 		Message message = new Message();   
-		message.what = YuanQuanService.MSG_Main_Activity;  
+		message.what = CirclesService.MSG_Main_Activity;  
 		message.obj = mLocationPlace;
 		handler.sendMessage(message);
 	}  
