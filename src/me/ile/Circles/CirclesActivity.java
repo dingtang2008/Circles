@@ -1,4 +1,4 @@
-package com.android.YuanQuan;
+package me.ile.Circles;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -31,7 +31,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class YuanQuanActivity extends Activity {
+public class CirclesActivity extends Activity {
 
 	private Drawable mDrawableBg;
 	private ProgressDialog pd;
@@ -50,8 +50,8 @@ public class YuanQuanActivity extends Activity {
 	private Handler handler = new Handler(){   
 		public void handleMessage(Message msg) {   
 			switch (msg.what) {   
-			case YuanQuanService.MSG_Main_Activity:
-				Intent intent = new Intent(YuanQuanActivity.this,MainActivity.class);
+			case CirclesService.MSG_Main_Activity:
+				Intent intent = new Intent(CirclesActivity.this,MainActivity.class);
 				intent.putExtra("location", (String)msg.obj);
 				// pd.dismiss();
 				startActivity(intent);
@@ -69,7 +69,7 @@ public class YuanQuanActivity extends Activity {
 	private TimerTask task = new TimerTask(){   
 		public void run() {   
 			Message message = new Message();   
-			message.what = YuanQuanService.MSG_Main_Activity;   
+			message.what = CirclesService.MSG_Main_Activity;   
 			handler.sendMessage(message);   
 		}   
 	}; 

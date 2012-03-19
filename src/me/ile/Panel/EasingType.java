@@ -1,4 +1,4 @@
-package com.android.YuanQuan;
+package me.ile.Panel;
 
 public class EasingType {
 	public enum Type {

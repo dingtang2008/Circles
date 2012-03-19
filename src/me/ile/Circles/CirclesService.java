@@ -1,10 +1,10 @@
-package com.android.YuanQuan;
+package me.ile.Circles;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-public class YuanQuanService extends Service {
+public class CirclesService extends Service {
 	
 	public static final int MSG_Main_Activity = 1;
 

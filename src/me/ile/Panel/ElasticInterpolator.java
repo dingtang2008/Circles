@@ -1,4 +1,4 @@
-package com.android.YuanQuan;
+package me.ile.Panel;
 
 /*
  *
@@ -31,49 +31,99 @@ package com.android.YuanQuan;
  *
  */
 
-import com.android.YuanQuan.EasingType.Type;
 
+import me.ile.Panel.EasingType.Type;
 import android.view.animation.Interpolator;
 
-public class ExpoInterpolator implements Interpolator {
+public class ElasticInterpolator implements Interpolator {
 
 	private Type type;
+	private float amplitude;
+	private float period;
 
-	public ExpoInterpolator(Type type) {
+	public ElasticInterpolator(Type type, float amplitude, float period) {
 		this.type = type;
+		this.amplitude = amplitude;
+		this.period = period;
 	}
 
 	public float getInterpolation(float t) {
 		if (type == Type.IN) {
-			return in(t);
+			return in(t, amplitude, period);
 		} else if (type == Type.OUT) {
-			return out(t);
+			return out(t, amplitude, period);
 		} else if (type == Type.INOUT) {
-			return inout(t);
+			return inout(t, amplitude, period);
 		}
 		return 0;
 	}
 
-	private float in(float t) {
-		return (float) ((t == 0) ? 0 : Math.pow(2, 10 * (t - 1)));
-	}
-
-	private float out(float t) {
-		return (float) ((t >= 1) ? 1 : (-Math.pow(2, -10 * t) + 1));
-	}
-
-	private float inout(float t) {
+	private float in(float t, float a, float p) {
 		if (t == 0) {
 			return 0;
 		}
 		if (t >= 1) {
 			return 1;
 		}
+		if (p == 0) {
+			p = 0.3f;
+		}
+		float s;
+		if (a == 0 || a < 1) {
+			a = 1;
+			s = p / 4;
+		} else {
+			s = (float) (p / (2 * Math.PI) * Math.asin(1 / a));
+		}
+		return (float) (-(a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t - s)
+				* (2 * Math.PI) / p)));
+	}
+
+	private float out(float t, float a, float p) {
+		if (t == 0) {
+			return 0;
+		}
+		if (t >= 1) {
+			return 1;
+		}
+		if (p == 0) {
+			p = 0.3f;
+		}
+		float s;
+		if (a == 0 || a < 1) {
+			a = 1;
+			s = p / 4;
+		} else {
+			s = (float) (p / (2 * Math.PI) * Math.asin(1 / a));
+		}
+		return (float) (a * Math.pow(2, -10 * t)
+				* Math.sin((t - s) * (2 * Math.PI) / p) + 1);
+	}
+
+	private float inout(float t, float a, float p) {
+		if (t == 0) {
+			return 0;
+		}
+		if (t >= 1) {
+			return 1;
+		}
+		if (p == 0) {
+			p = .3f * 1.5f;
+		}
+		float s;
+		if (a == 0 || a < 1) {
+			a = 1;
+			s = p / 4;
+		} else {
+			s = (float) (p / (2 * Math.PI) * Math.asin(1 / a));
+		}
 		t *= 2;
 		if (t < 1) {
-			return (float) (0.5f * Math.pow(2, 10 * (t - 1)));
+			return (float) (-.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math
+					.sin((t - s) * (2 * Math.PI) / p)));
 		} else {
-			return (float) (0.5f * (-Math.pow(2, -10 * --t) + 2));
+			return (float) (a * Math.pow(2, -10 * (t -= 1))
+					* Math.sin((t - s) * (2 * Math.PI) / p) * .5 + 1);
 		}
 	}
 }

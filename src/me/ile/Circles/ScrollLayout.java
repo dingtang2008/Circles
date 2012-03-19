@@ -1,5 +1,6 @@
-package com.android.YuanQuan;
+package me.ile.Circles;
 
+import me.ile.Panel.Panel;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -206,7 +207,7 @@ public class ScrollLayout extends ViewGroup {
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
 		// TODO Auto-generated method stub
 		Log.e(TAG, "onInterceptTouchEvent-slop:" + mTouchSlop);
-		if (Panel.mState == Panel.State.TRACKING)
+		if (Panel.mState == Panel.State.TRACKING||PullToRefreshListView.mScrollState==PullToRefreshListView.ScrollState.onScroll)
 			return false;
 		final int action = ev.getAction();
 		if ((action == MotionEvent.ACTION_MOVE)

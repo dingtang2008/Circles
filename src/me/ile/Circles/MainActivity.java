@@ -1,10 +1,16 @@
-package com.android.YuanQuan;
+package me.ile.Circles;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import me.ile.Circles.PullToRefreshListView.OnRefreshListener;
+import me.ile.Circles.ScrollLayout.OnViewChangeListener;
+import me.ile.Panel.Panel;
+import me.ile.Panel.Panel.OnPanelListener;
+
 import android.app.Activity;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -25,9 +31,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.android.YuanQuan.Panel.OnPanelListener;
-import com.android.YuanQuan.ScrollLayout.OnViewChangeListener;
 
 public class MainActivity extends Activity implements OnClickListener,
 android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
@@ -72,12 +75,19 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 			R.string.str_act_life, R.string.str_act_sport,
 			R.string.str_act_travel, R.string.str_act_study,
 			R.string.str_act_buy, R.string.str_act_other, };
+	private String[] mStrings = { "Abbaye de Belloc",
+			"Abbaye du Mont des Cats", "Abertam", "Abondance", "Ackawi",
+			"Acorn", "Adelost", "Affidelice au Chablis", "Afuega'l Pitu",
+			"Airag", "Airedale", "Aisy Cendre", "Allgauer Emmentaler",
+			"Alverca", "Ambert", "American Cheese", };
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
 		init();
 	}
@@ -142,6 +152,14 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 		// just for test
 
 		mainList = (ListView) findViewById(R.id.mainlist);
+		((PullToRefreshListView) mainList)
+				.setOnRefreshListener(new OnRefreshListener() {
+					@Override
+					public void onRefresh() {
+						// Do work to refresh the list here.
+						new GetDataTask().execute();
+					}
+				});
 		mainList.setAdapter(new mainListAdapter(this));
 
 		headerImage = (ImageView) findViewById(R.id.act_image);
@@ -186,6 +204,30 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 		loginButton = (Button) findViewById(R.id.signin_button);
 		loginButton.setOnClickListener(this);
 
+	}
+
+	private class GetDataTask extends AsyncTask<Void, Void, String[]> {
+
+		@Override
+		protected String[] doInBackground(Void... params) {
+			// Simulates a background job.
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				;
+			}
+			return mStrings;
+		}
+
+		@Override
+		protected void onPostExecute(String[] result) {
+			// mListItems.addFirst("Added after refresh...");
+
+			// Call onRefreshComplete when the list has been refreshed.
+			((PullToRefreshListView) mainList).onRefreshComplete();
+
+			super.onPostExecute(result);
+		}
 	}
 
 	private void setCurPoint(int index) {

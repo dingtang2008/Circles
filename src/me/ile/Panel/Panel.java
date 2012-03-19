@@ -1,5 +1,6 @@
-package com.android.YuanQuan;
+package me.ile.Panel;
 
+import me.ile.Circles.R;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;

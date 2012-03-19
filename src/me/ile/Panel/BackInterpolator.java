@@ -1,4 +1,4 @@
-package com.android.YuanQuan;
+package me.ile.Panel;
 
 /*
  *
@@ -31,99 +31,54 @@ package com.android.YuanQuan;
  *
  */
 
-import com.android.YuanQuan.EasingType.Type;
+import me.ile.Panel.EasingType.Type;
 
 import android.view.animation.Interpolator;
 
-public class ElasticInterpolator implements Interpolator {
+public class BackInterpolator implements Interpolator {
 
 	private Type type;
-	private float amplitude;
-	private float period;
+	private float overshot;
 
-	public ElasticInterpolator(Type type, float amplitude, float period) {
+	public BackInterpolator(Type type, float overshot) {
 		this.type = type;
-		this.amplitude = amplitude;
-		this.period = period;
+		this.overshot = overshot;
 	}
 
 	public float getInterpolation(float t) {
 		if (type == Type.IN) {
-			return in(t, amplitude, period);
+			return in(t, overshot);
 		} else if (type == Type.OUT) {
-			return out(t, amplitude, period);
+			return out(t, overshot);
 		} else if (type == Type.INOUT) {
-			return inout(t, amplitude, period);
+			return inout(t, overshot);
 		}
 		return 0;
 	}
 
-	private float in(float t, float a, float p) {
-		if (t == 0) {
-			return 0;
+	private float in(float t, float o) {
+		if (o == 0) {
+			o = 1.70158f;
 		}
-		if (t >= 1) {
-			return 1;
-		}
-		if (p == 0) {
-			p = 0.3f;
-		}
-		float s;
-		if (a == 0 || a < 1) {
-			a = 1;
-			s = p / 4;
-		} else {
-			s = (float) (p / (2 * Math.PI) * Math.asin(1 / a));
-		}
-		return (float) (-(a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t - s)
-				* (2 * Math.PI) / p)));
+		return t * t * ((o + 1) * t - o);
 	}
 
-	private float out(float t, float a, float p) {
-		if (t == 0) {
-			return 0;
+	private float out(float t, float o) {
+		if (o == 0) {
+			o = 1.70158f;
 		}
-		if (t >= 1) {
-			return 1;
-		}
-		if (p == 0) {
-			p = 0.3f;
-		}
-		float s;
-		if (a == 0 || a < 1) {
-			a = 1;
-			s = p / 4;
-		} else {
-			s = (float) (p / (2 * Math.PI) * Math.asin(1 / a));
-		}
-		return (float) (a * Math.pow(2, -10 * t)
-				* Math.sin((t - s) * (2 * Math.PI) / p) + 1);
+		return ((t -= 1) * t * ((o + 1) * t + o) + 1);
 	}
 
-	private float inout(float t, float a, float p) {
-		if (t == 0) {
-			return 0;
-		}
-		if (t >= 1) {
-			return 1;
-		}
-		if (p == 0) {
-			p = .3f * 1.5f;
-		}
-		float s;
-		if (a == 0 || a < 1) {
-			a = 1;
-			s = p / 4;
-		} else {
-			s = (float) (p / (2 * Math.PI) * Math.asin(1 / a));
+	private float inout(float t, float o) {
+		if (o == 0) {
+			o = 1.70158f;
 		}
 		t *= 2;
 		if (t < 1) {
-			return (float) (-.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math
-					.sin((t - s) * (2 * Math.PI) / p)));
+			return 0.5f * (t * t * (((o *= (1.525)) + 1) * t - o));
 		} else {
-			return (float) (a * Math.pow(2, -10 * (t -= 1))
-					* Math.sin((t - s) * (2 * Math.PI) / p) * .5 + 1);
+			return 0.5f * ((t -= 2) * t * (((o *= (1.525)) + 1) * t + o) + 2);
 		}
 	}
 }

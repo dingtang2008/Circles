@@ -1,4 +1,4 @@
-package com.android.YuanQuan;
+package me.ile.Panel;
 
 /*
  *
@@ -31,15 +31,15 @@ package com.android.YuanQuan;
  *
  */
 
-import com.android.YuanQuan.EasingType.Type;
 
+import me.ile.Panel.EasingType.Type;
 import android.view.animation.Interpolator;
 
-public class BounceInterpolator implements Interpolator {
+public class ExpoInterpolator implements Interpolator {
 
 	private Type type;
 
-	public BounceInterpolator(Type type) {
+	public ExpoInterpolator(Type type) {
 		this.type = type;
 	}
 
@@ -54,27 +54,26 @@ public class BounceInterpolator implements Interpolator {
 		return 0;
 	}
 
-	private float out(float t) {
-		if (t < (1 / 2.75)) {
-			return 7.5625f * t * t;
-		} else if (t < 2 / 2.75) {
-			return 7.5625f * (t -= (1.5 / 2.75)) * t + .75f;
-		} else if (t < 2.5 / 2.75) {
-			return 7.5625f * (t -= (2.25 / 2.75)) * t + .9375f;
-		} else {
-			return 7.5625f * (t -= (2.625 / 2.75)) * t + .984375f;
-		}
+	private float in(float t) {
+		return (float) ((t == 0) ? 0 : Math.pow(2, 10 * (t - 1)));
 	}
 
-	private float in(float t) {
-		return 1 - out(1 - t);
+	private float out(float t) {
+		return (float) ((t >= 1) ? 1 : (-Math.pow(2, -10 * t) + 1));
 	}
 
 	private float inout(float t) {
-		if (t < 0.5f) {
-			return in(t * 2) * .5f;
+		if (t == 0) {
+			return 0;
+		}
+		if (t >= 1) {
+			return 1;
+		}
+		t *= 2;
+		if (t < 1) {
+			return (float) (0.5f * Math.pow(2, 10 * (t - 1)));
 		} else {
-			return out(t * 2 - 1) * .5f + .5f;
+			return (float) (0.5f * (-Math.pow(2, -10 * --t) + 2));
 		}
 	}
 }

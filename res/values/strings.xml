@@ -3,7 +3,7 @@
 
     <string name="hello">hello</string>
     <string name="wait">Please wait to location</string>
-    <string name="app_name">YuanQuan</string>
+    <string name="app_name">Circles</string>
     <string name="sort_by_time">时间排序</string>
     <string name="sort_by_people">人气排序</string>
     <string name="user_image">用户头像</string>
@@ -43,5 +43,9 @@
     <string name="login">登录</string>
     <string name="roaming">随便逛逛</string>
     <string name="new_activity">发起活动</string>
+    <string name="pull_to_refresh_pull_label">下拉刷新…</string>
+    <string name="pull_to_refresh_release_label">松开刷新…</string>
+    <string name="pull_to_refresh_refreshing_label">加载中…</string>
+    <string name="pull_to_refresh_tap_label">Tap to refresh…<stri></stri></string>
 
 </resources>
