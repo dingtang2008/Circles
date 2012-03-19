@@ -30,7 +30,7 @@ import com.android.YuanQuan.Panel.OnPanelListener;
 import com.android.YuanQuan.ScrollLayout.OnViewChangeListener;
 
 public class MainActivity extends Activity implements OnClickListener,
-		android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
+android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 
 	// private Button b1;
 	// private ListView list;
@@ -58,8 +58,8 @@ public class MainActivity extends Activity implements OnClickListener,
 	private static final String PANEL_CONTENT_IMAGE_KEY = "ItemImage";
 	private static final String PANEL_CONTENT_TEXT_KEY = "ItemText";
 	private static int[] mainInfolistItems = { R.string.my_favor_activity,
-			R.string.my_orginized_activity, R.string.my_joined_activity,
-			R.string.my_favor_shops };
+		R.string.my_orginized_activity, R.string.my_joined_activity,
+		R.string.my_favor_shops };
 	private static int[] mainInfolistItemsNum = { 30, 8, 12, 6 };
 
 	private Integer[] mImageIds = { R.drawable.act_all, R.drawable.act_suggest,
@@ -157,11 +157,11 @@ public class MainActivity extends Activity implements OnClickListener,
 
 		SimpleAdapter maininfoItems = new SimpleAdapter(this, mainInfolist,
 				R.layout.user_info_list_item, new String[] { "itemtitle",
-						"itemNums" }, new int[] { R.id.userinfolist_itemtitle,
-						R.id.userinfolist_itemnum });
+		"itemNums" }, new int[] { R.id.userinfolist_itemtitle,
+				R.id.userinfolist_itemnum });
 
 		((ListView) findViewById(R.id.main_userinfo_list))
-				.setAdapter(maininfoItems);
+		.setAdapter(maininfoItems);
 
 		Spinner sp = (Spinner) findViewById(R.id.select_spinner);
 		String[] mStrings = { "软件学院1", "软件学院2", "软件学院3", "软件学院4", "软件学院5", "软件学院6"};
@@ -170,9 +170,14 @@ public class MainActivity extends Activity implements OnClickListener,
 		sp.setAdapter(spinnerAdapter);
 
 		String mLocation = getIntent().getStringExtra("location");
-		for(int i = 0; i < mStrings.length; i++){
-			if (mLocation.equals(mStrings[i])){
-				sp.setSelection(i,true);
+
+		if (mLocation.equals("")){
+			sp.setSelection(0,true);
+		} else {
+			for(int i = 0; i < mStrings.length; i++){
+				if (mLocation.equals(mStrings[i])){
+					sp.setSelection(i,true);
+				}
 			}
 		}
 		userView = (LinearLayout) findViewById(R.id.userlayout);
