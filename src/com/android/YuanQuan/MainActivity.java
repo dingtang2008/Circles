@@ -168,8 +168,13 @@ public class MainActivity extends Activity implements OnClickListener,
 		ArrayAdapter spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, mStrings);
 		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp.setAdapter(spinnerAdapter);
-		sp.setSelection(3,true);
 
+		String mLocation = getIntent().getStringExtra("location");
+		for(int i = 0; i < mStrings.length; i++){
+			if (mLocation.equals(mStrings[i])){
+				sp.setSelection(i,true);
+			}
+		}
 		userView = (LinearLayout) findViewById(R.id.userlayout);
 		loginView = userView.findViewById(R.id.login);
 		userInfoView = userView.findViewById(R.id.userinfo);
