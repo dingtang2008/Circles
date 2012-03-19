@@ -6,14 +6,6 @@
     android:background="@drawable/green"
     android:orientation="vertical" >
 
-    <include
-        android:id="@+id/title"
-        layout="@layout/title" />
-
-    <include
-        android:id="@+id/mheader"
-        layout="@layout/header" />
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -27,7 +19,7 @@
             <LinearLayout
                 android:id="@+id/userlayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical" >
 
                 <include
@@ -36,20 +28,76 @@
 
                 <include
                     android:id="@+id/userinfo"
-                    layout="@layout/user_info" 
-                    android:visibility="gone"/>
+                    layout="@layout/user_info"
+                    android:visibility="gone" />
             </LinearLayout>
 
-            <ListView
-                android:id="@+id/mainlist"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dip"
-                android:layout_weight="1"
-                android:background="#666666"
-                android:cacheColorHint="#00000000"
-                android:divider="@null"
-                android:stackFromBottom="true"
-                android:transcriptMode="normal" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="0dip"
+                android:paddingRight="0dip" >
+
+                <include
+                    android:id="@+id/title"
+                    layout="@layout/title" />
+
+                <include
+                    android:id="@+id/mheader"
+                    layout="@layout/header" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <ListView
+                        android:id="@+id/mainlist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#666666"
+                        android:cacheColorHint="#00000000"
+                        android:divider="@null"
+                        android:stackFromBottom="true"
+                        android:transcriptMode="normal" />
+
+                    <com.android.YuanQuan.Panel
+                        android:id="@+id/topPanel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        panel:animationDuration="800"
+                        panel:closedHandle="@drawable/top_switcher_collapsed_background"
+                        panel:content="@+id/panel_content"
+                        panel:handle="@+id/panelHandle"
+                        panel:linearFlying="true"
+                        panel:openedHandle="@drawable/top_switcher_expanded_background"
+                        android:paddingBottom="33dip"
+                        panel:position="top"
+                        panel:weight="87%p" >
+
+                        <GridView
+                            android:id="@+id/panel_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/white"
+                            android:columnWidth="90dp"
+                            android:gravity="center"
+                            android:horizontalSpacing="10dp"
+                            android:numColumns="auto_fit"
+                            android:stretchMode="columnWidth"
+                            android:verticalSpacing="10dp" >
+                        </GridView>
+
+                        <LinearLayout
+                            android:id="@+id/panelHandle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="33dip"
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="horizontal" >
+                        </LinearLayout>
+                    </com.android.YuanQuan.Panel>
+                </FrameLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -71,47 +119,11 @@
             android:paddingLeft="0dip"
             android:paddingRight="0dip" >
 
-            <com.android.YuanQuan.Panel
-                android:id="@+id/topPanel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                panel:animationDuration="800"
-                panel:closedHandle="@drawable/top_switcher_collapsed_background"
-                panel:content="@+id/panel_content"
-                panel:handle="@+id/panelHandle"
-                panel:linearFlying="true"
-                panel:openedHandle="@drawable/top_switcher_expanded_background"
-                android:paddingBottom="33dip"
-                panel:position="top"
-                panel:weight="65%p" >
-
-                <GridView
-                    android:id="@+id/panel_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/white"
-                    android:columnWidth="90dp"
-                    android:gravity="center"
-                    android:horizontalSpacing="10dp"
-                    android:numColumns="auto_fit"
-                    android:stretchMode="columnWidth"
-                    android:verticalSpacing="10dp" >
-                </GridView>
-
-                <LinearLayout
-                    android:id="@+id/panelHandle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="33dip"
-                    android:layout_gravity="center_horizontal"
-                    android:orientation="horizontal" >
-                </LinearLayout>
-            </com.android.YuanQuan.Panel>
-
             <RelativeLayout
                 android:id="@+id/bottomlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="300dip"
+                android:layout_marginTop="450dip"
                 android:orientation="horizontal" >
 
                 <ImageView

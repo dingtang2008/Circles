@@ -27,6 +27,7 @@ public class YuanQuanActivity extends Activity {
 		    	   Intent intent = new Intent(YuanQuanActivity.this,MainActivity.class);
 		    	  // pd.dismiss();
 		           startActivity(intent);
+		          // finish();
 		           anim.stop();
 		           break;
 		       
@@ -59,8 +60,8 @@ public class YuanQuanActivity extends Activity {
         getWindow().setBackgroundDrawable(mDrawableBg);
         
         /*
-        pd = ProgressDialog.show(this, "璇风◢鍚�.",
-				"姝ｅ湪鏀堕泦浣犵殑涓汉淇℃伅...", true, false);*/
+        pd = ProgressDialog.show(this, "鐠囬鈼㈤崥锟�",
+				"濮濓絽婀弨鍫曟肠娴ｇ姷娈戞稉顏冩眽娣団剝浼�..", true, false);*/
         timer.schedule(task, 3000);
         
         iv = (ImageView)findViewById(R.id.anminationtest);

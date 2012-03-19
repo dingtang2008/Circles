@@ -61,14 +61,14 @@ public class Panel extends LinearLayout {
 	public static final int LEFT = 2;
 	public static final int RIGHT = 3;
 	
-	private enum State {
+	public enum State {
 		ABOUT_TO_ANIMATE,
 		ANIMATING,
 		READY,
 		TRACKING,
 		FLYING,
 	};
-	private State mState;
+	public static State mState;
 	private Interpolator mInterpolator;
 	private GestureDetector mGestureDetector;
 	private int mContentHeight;
