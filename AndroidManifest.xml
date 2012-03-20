@@ -48,6 +48,13 @@
             android:label="@string/app_name">
 
         </activity>
+        <activity
+            android:name=".AddNewActivity"
+            android:theme="@style/XTheme"></activity>
+        <activity 
+            android:name=".MyFriends"
+            android:theme="@style/XTheme"></activity>
+        <service android:name=".CircleService" />
     </application>
 
 </manifest>

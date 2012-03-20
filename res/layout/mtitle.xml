@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" 
+    android:background="@drawable/titlebg"
+    android:orientation="horizontal" >
+    
+    <ImageButton android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dip"
+        android:background="#00000000"
+        android:contentDescription="@string/user_image"
+        android:src="@drawable/back"/>
+    
+    <TextView android:id="@+id/tTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textColor="#ffffff"
+        android:text="@string/new_activity" />
+    
+    <ImageButton android:id="@+id/home_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dip"
+        android:background="#00000000"
+        android:contentDescription="@string/roaming"
+        android:src="@drawable/home"/>
+</RelativeLayout>

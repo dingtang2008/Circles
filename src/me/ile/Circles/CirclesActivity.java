@@ -52,11 +52,12 @@ public class CirclesActivity extends Activity {
 			switch (msg.what) {   
 			case CirclesService.MSG_Main_Activity:
 				Intent intent = new Intent(CirclesActivity.this,MainActivity.class);
-				intent.putExtra("location", (String)msg.obj);
+				//intent.putExtra("location", (String)msg.obj);
+				intent.putExtra("location", "");
 				// pd.dismiss();
 				startActivity(intent);
 				// finish();
-				anim.stop();
+				//anim.stop();
 				break;
 
 			default:
@@ -87,36 +88,35 @@ public class CirclesActivity extends Activity {
 		mDrawableBg = getResources().getDrawable(R.drawable.location_bg);
 		getWindow().setBackgroundDrawable(mDrawableBg);
 
-
-		pd = ProgressDialog.show(this, "GPS", "GPS start", true, false);
-		//timer.schedule(task, 3000);
-
-		iv = (ImageView)findViewById(R.id.anminationtest);
-		iv.setBackgroundResource(R.anim.loading);
-		Object ob= iv.getBackground();
-		anim = (AnimationDrawable)ob;
-		anim.start();
+		//pd = ProgressDialog.show(this, "GPS", "GPS start", true, false);
+		timer.schedule(task, 3000);
+//
+//		iv = (ImageView)findViewById(R.id.anminationtest);
+//		iv.setBackgroundResource(R.anim.loading);
+//		Object ob= iv.getBackground();
+//		anim = (AnimationDrawable)ob;
+//		anim.start();
 
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE); 
-		if (!isNetworkAvailable(this)){
-			pd.dismiss();
-			Message message = new Message();   
-			message.what = CirclesService.MSG_Main_Activity;  
-			message.obj = "";
-			handler.sendMessageDelayed(message, 1000);
-			Toast.makeText(this, "No networknow Please set wifi or 3G", Toast.LENGTH_SHORT).show();
-		} else {
-			mSharePreference = this.getSharedPreferences(LOCATION_SHARE_ID, Context.MODE_PRIVATE);
-			mLocationPlace = mSharePreference.getString(LOCATION_KEY, "");
-			if (mLocationPlace.equals("")){ 
-				registerLocationListener();
-			} else {
-				Message message = new Message();   
-				message.what = CirclesService.MSG_Main_Activity;  
-				message.obj = mLocationPlace;
-				handler.sendMessageDelayed(message, 1000);
-			}
-		}
+//		if (!isNetworkAvailable(this)){
+//			//pd.dismiss();
+//			Message message = new Message();   
+//			message.what = CirclesService.MSG_Main_Activity;  
+//			message.obj = "";
+//			handler.sendMessageDelayed(message, 1000);
+//			Toast.makeText(this, "No networknow Please set wifi or 3G", Toast.LENGTH_SHORT).show();
+//		} else {
+//			mSharePreference = this.getSharedPreferences(LOCATION_SHARE_ID, Context.MODE_PRIVATE);
+//			mLocationPlace = mSharePreference.getString(LOCATION_KEY, "");
+//			if (mLocationPlace.equals("")){ 
+//				registerLocationListener();
+//			} else {
+//				Message message = new Message();   
+//				message.what = CirclesService.MSG_Main_Activity;  
+//				message.obj = mLocationPlace;
+//				handler.sendMessageDelayed(message, 1000);
+//			}
+//		}
 	}
 
 	@Override

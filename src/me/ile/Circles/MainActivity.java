@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import me.ile.Circles.PullToRefreshListView.OnRefreshListener;
 import me.ile.Circles.ScrollLayout.OnViewChangeListener;
+import me.ile.Panel.BounceInterpolator;
+import me.ile.Panel.EasingType.Type;
 import me.ile.Panel.Panel;
 import me.ile.Panel.Panel.OnPanelListener;
 
@@ -45,6 +47,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,13 +58,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener,
-android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
+		OnPanelListener, OnItemClickListener {
 
 
 	private Animation mShowAction;
 	private Animation mHiddenAction;
 	private ListView mainList;
 	private Spinner sp;
+	private Spinner sp2;
 	private boolean isLogin = false;
 	private LinearLayout userView;
 	private Account mAccount;
@@ -145,6 +149,13 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 	private TranslateAnimation sleepOutTA;
 	private TranslateAnimation sleepInTA;
 
+	// add by dingtang 03.20
+	private Button sortByPeople;
+	private Button sortByTime;
+	private long exitTime = 0;
+	private SharedPreferences sharedPreferences;
+	private SharedPreferences.Editor mEditor;
+
 	private enum extraItem {
 		MY_FRIENDS((int) 0),
 		MY_CIRCLES((int) 1);
@@ -160,23 +171,26 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-
-		mAccount = new Account("1","1");
+		sharedPreferences=getPreferences(Context.MODE_PRIVATE);
+		mEditor=sharedPreferences.edit();
+		mAccount = new Account("1", "1");
 
 		mStrings = getResources().getStringArray(R.array.test_school);
 
 		mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,   
-                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,   
-                1.0f, Animation.RELATIVE_TO_SELF, 0.0f);   
-        mShowAction.setDuration(500); 
+				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,   
+				1.0f, Animation.RELATIVE_TO_SELF, 0.0f);   
+		mShowAction.setDuration(500); 
 		mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,   
-                0.0f, Animation.RELATIVE_TO_SELF, 0.0f,   
-                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,   
-                -1.0f);
-        mHiddenAction.setDuration(500); 
-        
+				0.0f, Animation.RELATIVE_TO_SELF, 0.0f,   
+				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,   
+				-1.0f);
+		mHiddenAction.setDuration(500); 
+
 		init();
 		initshoplayout();
+		initHeaderView();
+
 	}
 
 	private void initshoplayout() {
@@ -300,7 +314,9 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 
 	private void init() {
 		mScrollLayout = (ScrollLayout) findViewById(R.id.ScrollLayout);
-
+		topPanel = (Panel) findViewById(R.id.topPanel);
+		topPanel.setOnPanelListener(this);
+		topPanel.setInterpolator(new BounceInterpolator(Type.OUT));
 		LinearLayout linearLayout = (LinearLayout) findViewById(R.id.llayout);
 		mViewCount = mScrollLayout.getChildCount();
 		mImageViews = new ImageView[mViewCount];
@@ -415,48 +431,31 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 
 		//from zhangjingbo end
 
-
-
-
-
-
-
-
 		sp = (Spinner) findViewById(R.id.select_spinner);
+		sp2 = (Spinner) findViewById(R.id.select_spinner2);
 
 		ArrayAdapter spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, mStrings);
 		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp.setAdapter(spinnerAdapter);
-		sp.setOnItemSelectedListener(new OnItemSelectedListener(){
-			@Override
-			public void onItemSelected(AdapterView<?> adapter, View view, int position,
-					long id) {
-				SharedPreferences locationShare = getSharedPreferences(CirclesActivity.LOCATION_SHARE_ID, Context.MODE_PRIVATE);
-				Editor editor = locationShare.edit();
-				editor.putString(CirclesActivity.LOCATION_KEY, mStrings[position]);
-				editor.commit();
-
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		sp2.setAdapter(spinnerAdapter);
+		sp.setOnItemSelectedListener(spinnerOnItemSelectedListener);
+		sp2.setOnItemSelectedListener(spinnerOnItemSelectedListener);
 
 
 		String mLocation = getIntent().getStringExtra("location");
 
 		if (mLocation.equals("")) {
 			sp.setSelection(0, true);
+			sp2.setSelection(0, true);
 		} else {
 			for (int i = 0; i < mStrings.length; i++) {
 				if (mLocation.equals(mStrings[i])) {
 					sp.setSelection(i, true);
+					sp2.setSelection(i, true);
 				}
 			}
 		}
+
 
 		actTitleView = (TextView) findViewById(R.id.act_title);
 
@@ -490,12 +489,47 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 		}
 	}
 
+	private void initHeaderView() {
+		sortByPeople = (Button) findViewById(R.id.sort_by_people);
+		sortByTime = (Button) findViewById(R.id.sort_by_time);
+		sortByPeople.setOnClickListener(this);
+		sortByTime.setOnClickListener(this);
+		String temp=sharedPreferences.getString("sort", "null");
+		if(temp.equals("sortByPeople"))onClick(sortByPeople);
+		if(temp.equals("sortByTime"))onClick(sortByTime);
+
+	}
+
+	OnItemSelectedListener spinnerOnItemSelectedListener = new OnItemSelectedListener(){
+		@Override
+		public void onItemSelected(AdapterView<?> adapter, View view, int position,
+				long id) {
+			if (sp.getCount()>position) {
+				//sp.setSelection(position, true);
+			}
+			if (sp2.getCount()>position) {
+				//sp2.setSelection(position, true);
+			}
+			SharedPreferences locationShare = getSharedPreferences(CirclesActivity.LOCATION_SHARE_ID, Context.MODE_PRIVATE);
+			Editor editor = locationShare.edit();
+			editor.putString(CirclesActivity.LOCATION_KEY, mStrings[position]);
+			editor.commit();
+
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+			// TODO Auto-generated method stub
+
+		}
+	};
+	
 	/////////////////////////zhangjingbo
-	private void getUserInfo() {
-		user_name = getIntent().getStringExtra("user_name");
+	private void getUserInfo(String string) {
+		//user_name = getIntent().getStringExtra("user_name");
 
 		final TextView userNameText = (TextView) findViewById(R.id.user_name);
-		userNameText.setText(user_name);
+		userNameText.setText(string);
 	}
 
 	private AdapterView.OnItemClickListener mMainInfoClickHandler = 
@@ -531,8 +565,8 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 		public void handleMessage(Message msg) {   
 			switch (msg.what) {   
 			case CirclesService.MSG_MyFriends_Activity:
-				//Intent intent = new Intent(this,MyFriends.class);
-				//startActivity(intent);
+				Intent intent = new Intent(MainActivity.this,MyFriends.class);
+				startActivity(intent);
 				break;
 
 			default:
@@ -630,9 +664,18 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 			bottomPanel.setOpen(!bottomPanel.isOpen(), true);
 			return false;
 		}
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
+		if (keyCode == KeyEvent.KEYCODE_BACK
+				&& event.getAction() == KeyEvent.ACTION_DOWN) {
 			mScrollLayout.snapToScreen(mScrollLayout.mDefaultScreen);
-			return false;
+
+			if ((System.currentTimeMillis() - exitTime) > 2000) {
+				if (mCurSel == 1)
+					Toast.makeText(getApplicationContext(), "再按一次退出程序",
+							Toast.LENGTH_SHORT).show();
+				exitTime = System.currentTimeMillis();
+			} else
+				finish();
+			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
@@ -648,15 +691,10 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 	}
 
 	@Override
-	public boolean onKey(View v, int keyCode, KeyEvent event) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		HashMap<String, Object> item = (HashMap<String, Object>) arg0
 				.getItemAtPosition(arg2);
+		topPanel.setOpen(false, true);
 		headerImage.setBackgroundResource(mImageIdsmall[arg2]);
 		headerText.setText((String) item.get(PANEL_CONTENT_TEXT_KEY));
 
@@ -955,6 +993,9 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 				if (mAccount.equals(adminAccount)){
 					loginView.setVisibility(View.GONE);
 					userInfoView.setVisibility(View.VISIBLE);
+
+			    	   final EditText use_name = (EditText) findViewById(R.id.eUsername);
+					getUserInfo(use_name.getText().toString());
 					isLogin = true;
 				} else {
 					isLogin = false;
@@ -990,24 +1031,39 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 			}
 			break;
 		case R.id.activity_posters:
-//            Intent intent = new Intent(MainActivity.this, ImageShow.class);
-//            Bundle bundle = new Bundle();
-//           // bundle.putString("imgSrc", imgSrc);
-//            intent.putExtras(bundle);
-//            startActivity(intent);
-int position = mainList.getPositionForView((View)v.getParent());
+			//            Intent intent = new Intent(MainActivity.this, ImageShow.class);
+			//            Bundle bundle = new Bundle();
+			//           // bundle.putString("imgSrc", imgSrc);
+			//            intent.putExtras(bundle);
+			//            startActivity(intent);
+			int position = mainList.getPositionForView((View)v.getParent());
 
-Log.i("test", "position = "+position);
+			Log.i("test", "position = "+position);
 
 			Dialog dialog = new Dialog(MainActivity.this, R.style.MyDialog);
 			dialog.setContentView(R.layout.image_dialog);
 			Integer postersId = (Integer) users.get(position).get("activityposters");
 			ImageView mImage = (ImageView)dialog.getWindow().findViewById(R.id.imageViewShow);
 
-			if (postersId != null)
-			mImage.setBackgroundResource((Integer) users.get(position).get("activityposters"));
-			dialog.show();
+			if (postersId != null){
+				dialog.getWindow().setBackgroundDrawableResource(postersId);
+				dialog.show();
+			}
 			v.setDrawingCacheEnabled(false);
+			break;
+		case R.id.sort_by_people:
+			sortByPeople.setBackgroundResource(R.drawable.ic_sort_people_press);
+			sortByTime.setBackgroundResource(R.drawable.ic_sort_time_normal);
+			mEditor.putString("sort", "sortByPeople");
+			mEditor.commit();
+			break;
+		case R.id.sort_by_time:
+			sortByTime.setBackgroundResource(R.drawable.ic_sort_time_press);
+			sortByPeople
+					.setBackgroundResource(R.drawable.ic_sort_people_normal);
+			mEditor.putString("sort", "sortByTime");
+			mEditor.commit();
+			break;
 		}
 	}
 
@@ -1062,12 +1118,4 @@ Log.i("test", "position = "+position);
 		return items;
 	}
 
-	@Override
-	public void onBackPressed() {
-		// TODO Auto-generated method stub
-		super.onBackPressed();
-		if (mCurSel == 1) {
-			finish();
-		}
-	}
 }

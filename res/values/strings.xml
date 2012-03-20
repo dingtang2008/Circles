@@ -35,10 +35,10 @@
     <string name="my_friends">我的好友</string>
     <string name="my_circles">我的圈子</string>
     <string name="userinfo_edit_title">编辑个人信息</string>
-    <string name="login_username_hint">请输入账号</string>
-    <string name="login_userpwd_hint">请输入密码</string>
+    <string name="login_username_hint">"	请输入账号"</string>
+    <string name="login_userpwd_hint">"	请输入密码"</string>
     <string name="app_logo">应用LOG</string>
-    <string name="register">快速注册</string>
+    <string name="register">注册</string>
     <string name="pwd_input">输入密码</string>
     <string name="login">登录</string>
     <string name="roaming">随便逛逛</string>
@@ -79,5 +79,14 @@
     <string name="cancel">取消</string>
     <string name="divider">分割符</string>
     <string name="test_school_item">学校3</string>
+    <string name="friend_name_1">张学友</string>
+    <string name="friend_name_2">刘德华</string>
+    <string name="friend_name_3">郭富城</string>
+    <string name="friend_name_4">黎明</string>
+    <string name="friend_name_5">林青霞</string>
+    <string name="friend_name_6">张曼玉</string>
+    <string name="default_search_hint">搜索</string>
+    <string name="search_button_description">搜索按钮</string>
+    <string name="default_friend_num">共229位好友</string>
 
 </resources>
