@@ -1001,7 +1001,10 @@ Log.i("test", "position = "+position);
 
 			Dialog dialog = new Dialog(MainActivity.this, R.style.MyDialog);
 			dialog.setContentView(R.layout.image_dialog);
+			Integer postersId = (Integer) users.get(position).get("activityposters");
 			ImageView mImage = (ImageView)dialog.getWindow().findViewById(R.id.imageViewShow);
+
+			if (postersId != null)
 			mImage.setBackgroundResource((Integer) users.get(position).get("activityposters"));
 			dialog.show();
 			v.setDrawingCacheEnabled(false);
