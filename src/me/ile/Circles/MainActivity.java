@@ -10,12 +10,14 @@ import me.ile.Panel.Panel.OnPanelListener;
 
 import android.accounts.Account;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
@@ -665,6 +667,7 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 		TextView actTitle;
 		ImageView actPosters;
 		ImageView actTag;
+		int position;
 	}
 
 	private class mainListAdapter extends BaseAdapter {
@@ -708,6 +711,8 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 						.findViewById(R.id.activity_title);
 				holder.actPosters = (ImageView) convertView
 						.findViewById(R.id.activity_posters);
+				holder.actPosters.setOnClickListener(MainActivity.this);
+				holder.position = position;
 				/*holder.actTag = (ImageView) convertView
 						.findViewById(R.id.activity_tag);*/
 
@@ -720,8 +725,7 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 
 			String title = (String) users.get(position).get("activitytitle");
 			Integer typeId = (Integer) users.get(position).get("typeimg");
-			Integer postersId = (Integer) users.get(position).get(
-					"activityposters");
+			Integer postersId = (Integer) users.get(position).get("activityposters");
 			holder.actTitle.setText(title);
 			holder.actType.setImageResource(typeId);
 			if (postersId != null)
@@ -984,8 +988,23 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 				loginView.setVisibility(View.VISIBLE);
 				isMessagesShow = false;
 			}
-
 			break;
+		case R.id.activity_posters:
+//            Intent intent = new Intent(MainActivity.this, ImageShow.class);
+//            Bundle bundle = new Bundle();
+//           // bundle.putString("imgSrc", imgSrc);
+//            intent.putExtras(bundle);
+//            startActivity(intent);
+int position = mainList.getPositionForView((View)v.getParent());
+
+Log.i("test", "position = "+position);
+
+			Dialog dialog = new Dialog(MainActivity.this, R.style.MyDialog);
+			dialog.setContentView(R.layout.image_dialog);
+			ImageView mImage = (ImageView)dialog.getWindow().findViewById(R.id.imageViewShow);
+			mImage.setBackgroundResource((Integer) users.get(position).get("activityposters"));
+			dialog.show();
+			v.setDrawingCacheEnabled(false);
 		}
 	}
 
