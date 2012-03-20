@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+        <ImageView
+            android:layout_width="30dip"
+            android:layout_height="40dip"
+            android:src="@drawable/left"
+        ></ImageView>
+        <TextView
+            android:id="@+id/shopinfotitle"
+            android:layout_width="230dip"			
+            android:layout_height="40dip"
+            android:textColor="#2F0000"
+            android:textSize="20dip"
+            android:gravity="center_horizontal"
+            android:text="@string/shopinfotitle"
+        ></TextView>
+
+        <ImageView
+            android:id="@+id/home"
+            android:layout_width="30dip"
+            android:layout_height="40dip"
+            android:src="@drawable/home" />
+
+</LinearLayout>

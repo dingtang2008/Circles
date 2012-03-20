@@ -29,7 +29,7 @@ public class MainView extends LinearLayout {
 		ArrayList<HashMap<String, Object>> users = new ArrayList<HashMap<String, Object>>();
 		for (int i = 0; i < 10; i++) {
 			HashMap<String, Object> user = new HashMap<String, Object>();
-			user.put("typeimg", R.drawable.type);
+			user.put("typeimg", R.drawable.listicon);
 			user.put("activitytitle", context.getString(R.string.test)
 					.toString());
 			if (i == 2 || i == 4) {

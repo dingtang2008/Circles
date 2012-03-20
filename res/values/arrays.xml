@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources  xmlns:android="http://schemas.android.com/apk/res/android">
+        <string-array name="test_school">
+            <item >学校1</item>
+            <item >学校2</item>
+            <item >学校3</item>
+            <item >学校4</item>
+            <item >学校5</item>
+            <item >学校6</item>
+            <item >学校7</item>
+            <item >学校8</item>
+        </string-array>
+    </resources>

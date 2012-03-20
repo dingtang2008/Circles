@@ -3,74 +3,90 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-    
-    <RelativeLayout android:layout_width="fill_parent"
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="70dip"
-        android:background="#6b6b6b">
-        <ImageView android:layout_width="50dip"
+        android:background="#6b6b6b" >
+
+        <ImageView
+            android:id="@+id/user_image"
+            android:layout_width="50dip"
             android:layout_height="50dip"
+            android:layout_alignParentLeft="true"
             android:layout_marginLeft="5dip"
             android:layout_marginTop="5dip"
-            android:layout_alignParentLeft="true"
             android:contentDescription="@string/user_image"
-            android:src="@drawable/default_user_image"
-            android:id="@+id/user_image"/>
-        <TextView android:layout_width="wrap_content"
+            android:src="@drawable/default_user_image" />
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/user_image"
             android:layout_marginLeft="5dip"
-            android:textSize="20dip"
-            android:textColor="#ffffff"
-            android:text="@string/default_user_name"
-            android:id="@+id/user_name"/>
-       <Button android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_toRightOf="@id/user_image"
+            android:text="@string/default_user_name"
+            android:textColor="#ffffff"
+            android:textSize="20dip" />
+
+        <Button
+            android:id="@+id/userinfo_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/user_name"
             android:layout_marginLeft="5dip"
             android:layout_marginTop="5dip"
+            android:layout_toRightOf="@id/user_image"
             android:background="@drawable/selector"
-            android:textColor="#ffffff"
-            android:text="@string/edit"
             android:longClickable="false"
-            android:id="@+id/userinfo_edit"/>
+            android:text="@string/edit"
+            android:textColor="#ffffff" />
     </RelativeLayout>
-    
-    <RelativeLayout android:layout_width="fill_parent"
-       android:layout_height="wrap_content"
-       android:background="#2d2d2d">
-       
-	    <ListView android:layout_width="fill_parent" 
-			android:layout_height="wrap_content" 
-			android:paddingRight="5dip"
-			android:layout_marginTop="10dip"
-			android:layout_marginLeft="5dip"
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#2d2d2d" >
+
+        <ListView
+            android:id="@+id/main_userinfo_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
-			android:layout_alignParentTop="true"
-			android:background="@drawable/maininfolist_bg"
-			android:divider="@drawable/divider_line"
-			android:id="@+id/main_userinfo_list">
-		</ListView>
-	    
-	    <ListView android:layout_width="fill_parent" 
-			android:layout_height="wrap_content"
-			android:paddingLeft="5dip"
-			android:layout_marginTop="30dip"
-			android:layout_marginLeft="5dip"
+            android:layout_marginTop="10dip"
+            android:background="@drawable/maininfolist_bg"
+            android:cacheColorHint="@color/forbidden_list_bg"
+            android:divider="@drawable/divider_line"
+            android:paddingRight="5dip" >
+        </ListView>
+
+        <ListView
+            android:id="@+id/extra_userinfo_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/main_userinfo_list"
+            android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
-			android:layout_below="@id/main_userinfo_list"
-			android:background="@drawable/extrainfolist_bg"
-			android:divider="@drawable/divider_line"
-			android:id="@+id/extra_userinfo_list">
-		</ListView>
-	    <TextView android:layout_width="fill_parent"
-	        android:layout_height="50dip"
-	        android:layout_alignParentBottom="true"
-	        android:layout_gravity="bottom"
-	        android:gravity="center"
-	        android:background="#000000"
-	        android:textColor="#ffffff"
-	        android:text="@string/messages">
-	    </TextView>
+            android:layout_marginTop="30dip"
+            android:background="@drawable/extrainfolist_bg"
+            android:cacheColorHint="@color/forbidden_list_bg"
+            android:divider="@drawable/divider_line"
+            android:paddingLeft="5dip" >
+        </ListView>
+
+        <TextView
+            android:id="@+id/user_messages"
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="@string/messages"
+            android:textColor="#ffffff" >
+        </TextView>
     </RelativeLayout>
+
 </LinearLayout>

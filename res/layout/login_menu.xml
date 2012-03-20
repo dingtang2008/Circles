@@ -1,68 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    <ImageView android:layout_width="150dip"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@drawable/login_bg" >
+
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="150dip"
         android:layout_height="150dip"
         android:layout_marginTop="10dip"
-        android:layout_centerHorizontal="true"
         android:contentDescription="@string/app_logo"
-        android:src="@drawable/default_user_image"
-        android:id="@+id/app_logo"/>
-    
-    <TextView android:layout_width="30dip"
-        android:layout_height="wrap_content"
-        android:minLines="2"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="5dip"
-        android:layout_below="@id/app_logo"
-        android:layout_marginTop="50dip"
-        android:text="@string/register"
-        android:id="@+id/tQuick_register"/>
-    
-    <EditText android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_toRightOf="@id/tQuick_register"
-		android:layout_marginLeft="5dip"
-		android:layout_below="@id/app_logo"
-        android:layout_marginTop="50dip"
-		android:singleLine="true"
-		android:hint="@string/login_username_hint"
-		android:inputType="text"
-		android:id="@+id/eUsername"/>
-    
-    <TextView android:layout_width="30dip"
-        android:layout_height="wrap_content"
-        android:minLines="2"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/tQuick_register"
-        android:layout_marginLeft="5dip"
-        android:layout_marginTop="25dip"
-        android:text="@string/pwd_forget"
-        android:id="@+id/tPwdForget"/>
-    
-    <EditText android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_toRightOf="@id/tPwdForget"
-		android:layout_below="@id/eUsername"
-		android:layout_marginLeft="5dip"
-		android:layout_marginTop="10dip"
-		android:password="true"
-		android:singleLine="true"
-		android:hint="@string/login_userpwd_hint"
-		android:inputType="text"
-		android:id="@+id/eUserpwd"/>
-    
-    <Button
-		android:id="@+id/signin_button"
-		android:layout_width="80dip"
-		android:layout_height="50dip"
-		android:layout_below="@id/eUserpwd"
-		android:layout_marginTop="50dip"
-		android:layout_centerHorizontal="true"
-		android:text="@string/login"
-		android:background="@drawable/selector"
-	/>
+        android:background="@drawable/default_user_image"/>
 
-</RelativeLayout>
+    <EditText
+        android:id="@+id/eUsername"
+        android:layout_width="220dip"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dip"
+        android:hint="@string/login_username_hint"
+        android:inputType="text"
+        android:singleLine="true" 
+        style="@style/my_edittext_style"/>
+
+    <EditText
+        android:id="@+id/eUserpwd"
+        android:layout_width="220dip"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:hint="@string/login_userpwd_hint"
+        android:inputType="textPassword"
+        android:password="true"
+        android:singleLine="true" 
+        style="@style/my_edittext_style"/>
+
+    <Button
+        android:id="@+id/signin_button"
+        android:layout_width="80dip"
+        android:layout_height="50dip"
+        android:layout_marginTop="50dip"
+        android:background="@drawable/selector"
+        android:text="@string/login" />
+
+</LinearLayout>

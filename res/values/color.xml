@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources  xmlns:android="http://schemas.android.com/apk/res/android">
 
     <drawable name="white">#ffffff</drawable>
     <drawable name="green">#6BB61B</drawable>
+    <color name="forbidden_list_bg">#00000000</color>
 
 </resources>

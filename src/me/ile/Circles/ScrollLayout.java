@@ -17,7 +17,7 @@ public class ScrollLayout extends ViewGroup {
 	private VelocityTracker mVelocityTracker;
 
 	private int mCurScreen;
-	private int mDefaultScreen = 1;
+	public int mDefaultScreen = 1;
 
 	private static final int TOUCH_STATE_REST = 0;
 	private static final int TOUCH_STATE_SCROLLING = 1;

@@ -12,7 +12,7 @@
 
         <me.ile.Circles.ScrollLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/ScrollLayoutTest"
+            android:id="@+id/ScrollLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
@@ -55,10 +55,9 @@
                         android:id="@+id/mainlist"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#666666"
-                        android:cacheColorHint="#00000000"
+                        android:cacheColorHint="@color/forbidden_list_bg"
                         android:divider="@null"
-                        android:stackFromBottom="true"
+                        android:background="@drawable/listviewbg"
                         android:transcriptMode="normal" />
 
                     <me.ile.Panel.Panel
@@ -73,17 +72,18 @@
                         panel:openedHandle="@drawable/top_switcher_expanded_background"
                         android:paddingBottom="33dip"
                         panel:position="top"
-                        panel:weight="87%p" >
+                        panel:weight="80%p" >
 
                         <GridView
                             android:id="@+id/panel_content"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/white"
+                            android:background="@drawable/gridviewbg"
                             android:columnWidth="90dp"
                             android:gravity="center"
                             android:horizontalSpacing="10dp"
                             android:numColumns="auto_fit"
+                            android:padding="10dp"
                             android:stretchMode="columnWidth"
                             android:verticalSpacing="10dp" >
                         </GridView>
@@ -100,15 +100,15 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/shopllayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#FF00" >
+                android:background="#FF00"
+                android:orientation="vertical" >
 
-                <Button
-                    android:id="@+id/button1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button1" />
+                <include
+                    android:id="@+id/shoplayout"
+                    layout="@layout/shoplayout" />
             </LinearLayout>
         </me.ile.Circles.ScrollLayout>
 
@@ -125,14 +125,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="470dip"
                 android:orientation="horizontal" >
-
-                <ImageView
-                    android:id="@+id/add_act"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:clickable="true"
-                    android:src="@drawable/add_act" />
 
                 <LinearLayout
                     android:id="@+id/llayout"

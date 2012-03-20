@@ -43,8 +43,8 @@ public class CirclesActivity extends Activity {
 	private LocationManager locationManager; 
 	private SharedPreferences mSharePreference;
 	private String mLocationPlace;
-	private static final String LOCATION_KEY = "location_key";
-	private static final String LOCATION_SHARE_ID = "mLocation";
+	public static final String LOCATION_KEY = "location_key";
+	public static final String LOCATION_SHARE_ID = "mLocation";
 
 
 	private Handler handler = new Handler(){   
@@ -88,7 +88,7 @@ public class CirclesActivity extends Activity {
 		getWindow().setBackgroundDrawable(mDrawableBg);
 
 
-		pd = ProgressDialog.show(this, "GPS 定位", "GPS 开始定位", true, false);
+		pd = ProgressDialog.show(this, "GPS", "GPS start", true, false);
 		//timer.schedule(task, 3000);
 
 		iv = (ImageView)findViewById(R.id.anminationtest);
@@ -110,6 +110,11 @@ public class CirclesActivity extends Activity {
 			mLocationPlace = mSharePreference.getString(LOCATION_KEY, "");
 			if (mLocationPlace.equals("")){ 
 				registerLocationListener();
+			} else {
+				Message message = new Message();   
+				message.what = CirclesService.MSG_Main_Activity;  
+				message.obj = mLocationPlace;
+				handler.sendMessageDelayed(message, 1000);
 			}
 		}
 	}
@@ -146,12 +151,12 @@ public class CirclesActivity extends Activity {
 				currentLocation=location;  
 				showLocation(location); 
 			}  
-			//移除基于LocationManager.NETWORK_PROVIDER的监听器  
+			//remove LocationManager.NETWORK_PROVIDER
 			if(LocationManager.NETWORK_PROVIDER.equals(location.getProvider())){  
 				locationManager.removeUpdates(this);  
 			}  
 		}  
-		//后3个方法此处不做处理  
+ 
 		public void onStatusChanged(String provider, int status, Bundle extras) {  
 		}  
 		public void onProviderEnabled(String provider) {  
@@ -162,13 +167,10 @@ public class CirclesActivity extends Activity {
 
 	private void showLocation(Location location){  
 
-		//纬度  
-		Log.v("GPSTEST","Latitude:"+location.getLatitude());  
-		//经度  
-		Log.v("GPSTEST","Longitude:"+location.getLongitude());  
-		//精确度  
+		Log.v("GPSTEST","Latitude:"+location.getLatitude()); 
+		Log.v("GPSTEST","Longitude:"+location.getLongitude()); 
 		Log.v("GPSTEST","Accuracy:"+location.getAccuracy());  
-		//Location还有其它属性，请自行探索  
+
 		Geocoder geocoder=new Geocoder(this); 
 		List places = null;
 		try {
@@ -182,20 +184,21 @@ public class CirclesActivity extends Activity {
 		String placename = "";
 		if (places != null && places.size() > 0) {
 			// placename=((Address)places.get(0)).getLocality();
-			//一下的信息将会具体到某条街
-			//其中getAddressLine(0)表示国家，getAddressLine(1)表示精确到某个区，getAddressLine(2)表示精确到具体的街
+			
+			//Country: getAddressLine(0),cell: getAddressLine(1), street: getAddressLine(2)
 			placename = ((Address) places.get(0)).getAddressLine(0) + ", " + System.getProperty("line.separator")
 					+ ((Address) places.get(0)).getAddressLine(1) + ", "
 					+ ((Address) places.get(0)).getAddressLine(2);
-			Toast.makeText(this, "您现在的位置大概是"+placename, Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "your location may be "+placename, Toast.LENGTH_LONG).show();
 		} else {
 			Toast.makeText(this, "No network", Toast.LENGTH_LONG).show();
 		}
 		Log.v("GPSTEST","placename:"+placename); 
 
-		mLocationPlace = "软件学院5";
+		mLocationPlace = getResources().getString(R.string.test_school_item);
 		Editor editor = mSharePreference.edit();
 		editor.putString(LOCATION_KEY, mLocationPlace);
+		editor.commit();
 		Message message = new Message();   
 		message.what = CirclesService.MSG_Main_Activity;  
 		message.obj = mLocationPlace;
@@ -263,6 +266,10 @@ public class CirclesActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+		if(pd != null){
+			pd.dismiss();
+			pd = null;
+		}
 		if(gpsListener!=null){  
 			locationManager.removeUpdates(gpsListener);  
 			gpsListener=null;  

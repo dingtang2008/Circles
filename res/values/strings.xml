@@ -39,7 +39,7 @@
     <string name="login_userpwd_hint">请输入密码</string>
     <string name="app_logo">应用LOG</string>
     <string name="register">快速注册</string>
-    <string name="pwd_forget">忘记密码</string>
+    <string name="pwd_input">输入密码</string>
     <string name="login">登录</string>
     <string name="roaming">随便逛逛</string>
     <string name="new_activity">发起活动</string>
@@ -47,5 +47,37 @@
     <string name="pull_to_refresh_release_label">松开刷新…</string>
     <string name="pull_to_refresh_refreshing_label">加载中…</string>
     <string name="pull_to_refresh_tap_label">Tap to refresh…<stri></stri></string>
+    
+    <string name="listtitle">ListView</string>
+    <string name="maptitle">MapView</string>
+     <string name="shopinfotitle">Shopinfo</string>
+    <string name="searchTips">请输入地点或商铺名称</string>
+        <string name="pop">人气：90</string>
+     <string name="activitynumber">活动数：30</string>
+    <string name="address_temp">聚贤路3弄999号</string>
+    <string name="phonenumber">0574-87621321</string>
+    <string name="goingactivity">正在进行的活动</string>
+    <string name="passedactivity">已经举办过的活动</string>
+        <string name="mark">收藏店铺</string>
+    <string name="take">发布活动</string>
+    <string name="suggest">推荐给好友</string>
+    
+    <string name="title">标题:</string>
+    <string name="title_hint">可输入30字以内的标题</string>
+    <string name="summary">简介:</string>
+    <string name="summary_hint">可输入30字以内的简介</string>
+    <string name="type">类型:</string>
+    <string name="start_time">开始时间：</string>
+    <string name="end_time">结束时间：</string>
+    <string name="address">地址:</string>
+    <string name="address_hint">大城东路999号</string>
+    <string name="poster">海报:</string>
+    <string name="poster_description">活动海报</string>
+    <string name="regularly_hold_ornot">是否定期举办</string>
+    <string name="invite_friend_ornot">是否邀请好友</string>
+    <string name="distribute">发布</string>
+    <string name="cancel">取消</string>
+    <string name="divider">分割符</string>
+    <string name="test_school_item">学校3</string>
 
 </resources>
