@@ -55,6 +55,9 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements OnClickListener,
 android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 
+
+	private Animation mShowAction;
+	private Animation mHiddenAction;
 	private ListView mainList;
 	private Spinner sp;
 	private boolean isLogin = false;
@@ -155,12 +158,21 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
 		mAccount = new Account("1","1");
 
 		mStrings = getResources().getStringArray(R.array.test_school);
+
+		mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,   
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,   
+                1.0f, Animation.RELATIVE_TO_SELF, 0.0f);   
+        mShowAction.setDuration(500); 
+		mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,   
+                0.0f, Animation.RELATIVE_TO_SELF, 0.0f,   
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,   
+                -1.0f);
+        mHiddenAction.setDuration(500); 
+        
 		init();
 		initshoplayout();
 	}
@@ -959,10 +971,25 @@ android.view.View.OnKeyListener, OnPanelListener, OnItemClickListener {
 			mScrollLayout.snapToScreen(2);
 			break;
 		case R.id.user_messages:
+			if (isMessagesShow){
+				isMessagesShow = true;
+				userInfoView.startAnimation(mHiddenAction);
+				userInfoView.setVisibility(View.GONE);
+				loginView.startAnimation(mShowAction);
+				loginView.setVisibility(View.VISIBLE);
+			} else {
+				userInfoView.startAnimation(mHiddenAction);
+				userInfoView.setVisibility(View.GONE);
+				loginView.startAnimation(mShowAction);
+				loginView.setVisibility(View.VISIBLE);
+				isMessagesShow = false;
+			}
+
 			break;
 		}
 	}
 
+	private boolean isMessagesShow = false;
 	private boolean isClockwise = true;
 	private AnimationListener clockwiseAmListener = new AnimationListener() {
 		public void onAnimationEnd(Animation arg0) {
