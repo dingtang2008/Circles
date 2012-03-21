@@ -29,10 +29,10 @@ public class MyFriends extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+        //requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
     	
         setContentView(R.layout.myfriends);
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.mtitle);
+        //getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.mtitle);
         
         TextView titleText = (TextView)findViewById(R.id.tTitleText);
         titleText.setText(R.string.my_friends);
@@ -56,6 +56,8 @@ public class MyFriends extends Activity {
         
         ImageButton backButton = (ImageButton)findViewById(R.id.back_button);
         backButton.setOnClickListener(backListener);
+        ImageButton backMainButton = (ImageButton)findViewById(R.id.home_button);
+        backMainButton.setOnClickListener(backMainListener);
     }
     
     private OnClickListener backListener = new OnClickListener()
@@ -63,6 +65,15 @@ public class MyFriends extends Activity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
+			finish();
+		}
+    };
+    
+    private OnClickListener backMainListener = new OnClickListener()
+    {
+		@Override
+		public void onClick(View v) {
+			MainActivity.getscroll().snapToScreen(1);
 			finish();
 		}
     };

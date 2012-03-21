@@ -32,6 +32,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -88,7 +89,7 @@ public class MainActivity extends Activity implements OnClickListener,
 	private TextView headerText;
 	private int mViewCount;
 	private int mCurSel;
-	private ScrollLayout mScrollLayout;
+	private static ScrollLayout mScrollLayout;
 	private SharedPreferences mSharePreference;
 	private static final String LOGIN_STATE_KEY = "login_state_key";
 	private static final String LOGIN_STATE_SHARE_ID = "login_state_id";
@@ -191,6 +192,10 @@ public class MainActivity extends Activity implements OnClickListener,
 		initshoplayout();
 		initHeaderView();
 
+	}
+	
+	public static ScrollLayout getscroll(){
+		return mScrollLayout;
 	}
 
 	private void initshoplayout() {
@@ -434,12 +439,13 @@ public class MainActivity extends Activity implements OnClickListener,
 		sp = (Spinner) findViewById(R.id.select_spinner);
 		sp2 = (Spinner) findViewById(R.id.select_spinner2);
 
-		ArrayAdapter spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, mStrings);
+		spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, mStrings);
 		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp.setAdapter(spinnerAdapter);
 		sp2.setAdapter(spinnerAdapter);
-		sp.setOnItemSelectedListener(spinnerOnItemSelectedListener);
-		sp2.setOnItemSelectedListener(spinnerOnItemSelectedListener);
+		sp.setOnItemSelectedListener(spinnerOnItemSelectedListener1);
+		sp2.setOnItemSelectedListener(spinnerOnItemSelectedListener2);
+		//sp.startAnimation(mShowAction);
 
 
 		String mLocation = getIntent().getStringExtra("location");
@@ -488,7 +494,7 @@ public class MainActivity extends Activity implements OnClickListener,
 			userInfoView.setVisibility(View.GONE);
 		}
 	}
-
+	ArrayAdapter spinnerAdapter;
 	private void initHeaderView() {
 		sortByPeople = (Button) findViewById(R.id.sort_by_people);
 		sortByTime = (Button) findViewById(R.id.sort_by_time);
@@ -500,16 +506,30 @@ public class MainActivity extends Activity implements OnClickListener,
 
 	}
 
-	OnItemSelectedListener spinnerOnItemSelectedListener = new OnItemSelectedListener(){
+	OnItemSelectedListener spinnerOnItemSelectedListener1 = new OnItemSelectedListener(){
 		@Override
 		public void onItemSelected(AdapterView<?> adapter, View view, int position,
 				long id) {
-			if (sp.getCount()>position) {
-				//sp.setSelection(position, true);
-			}
-			if (sp2.getCount()>position) {
-				//sp2.setSelection(position, true);
-			}
+			sp2.setAdapter(sp.getAdapter());
+			SharedPreferences locationShare = getSharedPreferences(CirclesActivity.LOCATION_SHARE_ID, Context.MODE_PRIVATE);
+			Editor editor = locationShare.edit();
+			editor.putString(CirclesActivity.LOCATION_KEY, mStrings[position]);
+			editor.commit();
+
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+			// TODO Auto-generated method stub
+
+		}
+	};
+	
+	OnItemSelectedListener spinnerOnItemSelectedListener2 = new OnItemSelectedListener(){
+		@Override
+		public void onItemSelected(AdapterView<?> adapter, View view, int position,
+				long id) {
+			sp.setAdapter(sp2.getAdapter());
 			SharedPreferences locationShare = getSharedPreferences(CirclesActivity.LOCATION_SHARE_ID, Context.MODE_PRIVATE);
 			Editor editor = locationShare.edit();
 			editor.putString(CirclesActivity.LOCATION_KEY, mStrings[position]);
@@ -670,7 +690,7 @@ public class MainActivity extends Activity implements OnClickListener,
 
 			if ((System.currentTimeMillis() - exitTime) > 2000) {
 				if (mCurSel == 1)
-					Toast.makeText(getApplicationContext(), "再按一次退出程序",
+					Toast.makeText(getApplicationContext(), R.string.back_to_exit,
 							Toast.LENGTH_SHORT).show();
 				exitTime = System.currentTimeMillis();
 			} else

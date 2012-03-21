@@ -1,22 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/title_bg"
+    android:gravity="center"
     android:orientation="vertical" >
-      
-    <ProgressBar 
-        android:id="@+id/loading_process_dialog_progressBar"
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		android:indeterminate="false" 
-		android:layout_centerInParent="true"
-		android:indeterminateDrawable="@anim/loading" 
-		android:progressDrawable="@anim/loading"/>
-    
-    <ImageView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:contentDescription="@string/location_animation"
-        android:id="@+id/anminationtest"/>
 
-</RelativeLayout>
+    <Spinner
+        android:id="@+id/school_spinner"
+        android:layout_width="250dip"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/location"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dip"
+            android:gravity="center"
+            android:textColor="#000000" />
+
+        <ProgressBar
+            android:id="@+id/loading_process_dialog_progressBar"
+            style="@style/animStyle"
+            android:layout_width="200dip"
+            android:layout_height="200dip"
+            android:layout_below="@+id/location"
+            android:layout_centerInParent="true" >
+        </ProgressBar>
+
+        <ImageView
+            android:id="@+id/anminationtest"
+            android:layout_width="200dip"
+            android:layout_height="200dip"
+            android:layout_below="@+id/location"
+            android:layout_centerInParent="true"
+            android:background="@drawable/location_act_01"
+            android:contentDescription="@string/location_animation" />
+    </RelativeLayout>
+
+</LinearLayout>

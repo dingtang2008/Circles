@@ -27,14 +27,27 @@ import android.os.Handler;
 import android.os.Message;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class CirclesActivity extends Activity {
-
+	AnimationDrawable animationDrawable;
+	private boolean isAnimationOn = true;
 	private Drawable mDrawableBg;
-	private ProgressDialog pd;
+	private ProgressBar pb;
 	private ImageView iv = null;
 	private AnimationDrawable anim = null;
 	private LocationListener gpsListener=null;  
@@ -45,19 +58,26 @@ public class CirclesActivity extends Activity {
 	private String mLocationPlace;
 	public static final String LOCATION_KEY = "location_key";
 	public static final String LOCATION_SHARE_ID = "mLocation";
-
+	public String[] mStrings;
+	public TextView locationMsg;
+	public ImageView img ;
+	public ArrayAdapter spinnerAdapter ;
 
 	private Handler handler = new Handler(){   
 		public void handleMessage(Message msg) {   
 			switch (msg.what) {   
 			case CirclesService.MSG_Main_Activity:
 				Intent intent = new Intent(CirclesActivity.this,MainActivity.class);
-				//intent.putExtra("location", (String)msg.obj);
-				intent.putExtra("location", "");
-				// pd.dismiss();
-				startActivity(intent);
-				// finish();
-				//anim.stop();
+				intent.putExtra("location", mLocationPlace);
+				if (mLocationPlace.equals("")){
+					locationMsg.setText(R.string.fail_location);
+					pb.setVisibility(View.GONE);
+					img.setVisibility(View.VISIBLE);
+					isAnimationOn = false;
+				} else {
+					locationMsg.setText(mLocationPlace);
+					startActivity(intent);
+				}
 				break;
 
 			default:
@@ -71,7 +91,7 @@ public class CirclesActivity extends Activity {
 		public void run() {   
 			Message message = new Message();   
 			message.what = CirclesService.MSG_Main_Activity;   
-			handler.sendMessage(message);   
+			handler.sendMessageDelayed(message, 4000);   
 		}   
 	}; 
 
@@ -83,41 +103,125 @@ public class CirclesActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.mainview);
 
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE); 
+		mSharePreference = this.getSharedPreferences(LOCATION_SHARE_ID, Context.MODE_PRIVATE);
+		mLocationPlace = mSharePreference.getString(LOCATION_KEY, "");
+		registerLocationListener();
+
 		Timer timer = new Timer();   
 
 		mDrawableBg = getResources().getDrawable(R.drawable.location_bg);
 		getWindow().setBackgroundDrawable(mDrawableBg);
 
-		//pd = ProgressDialog.show(this, "GPS", "GPS start", true, false);
-		timer.schedule(task, 3000);
-//
-//		iv = (ImageView)findViewById(R.id.anminationtest);
-//		iv.setBackgroundResource(R.anim.loading);
-//		Object ob= iv.getBackground();
-//		anim = (AnimationDrawable)ob;
-//		anim.start();
+		locationMsg = (TextView) findViewById(R.id.location);
 
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE); 
-//		if (!isNetworkAvailable(this)){
-//			//pd.dismiss();
-//			Message message = new Message();   
-//			message.what = CirclesService.MSG_Main_Activity;  
-//			message.obj = "";
-//			handler.sendMessageDelayed(message, 1000);
-//			Toast.makeText(this, "No networknow Please set wifi or 3G", Toast.LENGTH_SHORT).show();
-//		} else {
-//			mSharePreference = this.getSharedPreferences(LOCATION_SHARE_ID, Context.MODE_PRIVATE);
-//			mLocationPlace = mSharePreference.getString(LOCATION_KEY, "");
-//			if (mLocationPlace.equals("")){ 
-//				registerLocationListener();
-//			} else {
-//				Message message = new Message();   
-//				message.what = CirclesService.MSG_Main_Activity;  
-//				message.obj = mLocationPlace;
-//				handler.sendMessageDelayed(message, 1000);
-//			}
-//		}
+		final Animation mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,   
+				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,   
+				-1.0f, Animation.RELATIVE_TO_SELF, 0.0f);  
+
+		String defaultspinner = getResources().getString(R.string.default_spinner);
+		String[] dftSring = { defaultspinner,};
+		Spinner sp = (Spinner) findViewById(R.id.school_spinner);
+		mStrings = getResources().getStringArray(R.array.test_school);
+		spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, dftSring);
+		//ArrayAdapter spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, mStrings);
+
+		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		sp.setAdapter(spinnerAdapter);
+		sp.setOnItemSelectedListener(spinnerOnItemSelectedListener);
+		sp.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (mLocationPlace.equals("") && !isAnimationOn){
+					spinnerAdapter = new ArrayAdapter<String>(CirclesActivity.this, R.layout.spinner_item, mStrings);
+					return false;
+				}
+				return true;
+			}
+		});
+
+
+		pb = (ProgressBar) findViewById(R.id.loading_process_dialog_progressBar);
+
+		img = (ImageView) findViewById(R.id.anminationtest);
+		img.setVisibility(View.GONE);
+		//		pb.setOnClickListener(new OnClickListener() {
+		//			@Override
+		//			public void onClick(View v) {
+		//				if (isAnimationOn){
+		//					pb.setVisibility(View.GONE);
+		//					img.setVisibility(View.VISIBLE);
+		//					isAnimationOn = false;
+		//				}
+		//			}
+		//		});
+		img.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (!isAnimationOn){
+					isAnimationOn = true;
+					pb.setVisibility(View.VISIBLE);
+					img.setVisibility(View.GONE);
+				}
+			}
+		});
+
+
+		//pd = ProgressDialog.show(this, "GPS", "GPS start", true, false);
+		//timer.schedule(task, 10000);
+
+		//		iv = (ImageView)findViewById(R.id.anminationtest);
+		//		iv.setBackgroundResource(R.anim.loading);
+		//		Object ob= iv.getBackground();
+		//		anim = (AnimationDrawable)ob;
+		//		anim.start();
+
+		//		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE); 
+
+		//				if (!isNetworkAvailable(this)){
+		//					Message message = new Message();   
+		//					message.what = CirclesService.MSG_Main_Activity;  
+		//					message.obj = "";
+		//					handler.sendMessageDelayed(message, 1000);
+		//					Toast.makeText(this, "No networknow Please set wifi or 3G", Toast.LENGTH_SHORT).show();
+		//				} else {
+		//					mSharePreference = this.getSharedPreferences(LOCATION_SHARE_ID, Context.MODE_PRIVATE);
+		//					mLocationPlace = mSharePreference.getString(LOCATION_KEY, "");
+		//					if (mLocationPlace.equals("")){ 
+		//						registerLocationListener();
+		//					} else {
+		//						Message message = new Message();   
+		//						message.what = CirclesService.MSG_Main_Activity;  
+		//						message.obj = mLocationPlace;
+		//						handler.sendMessageDelayed(message, 1000);
+		//					}
+		//				}
 	}
+
+	OnItemSelectedListener spinnerOnItemSelectedListener = new OnItemSelectedListener(){
+		@Override
+		public void onItemSelected(AdapterView<?> adapter, View view, int position,
+				long id) {
+			if (mLocationPlace.equals("")){
+
+				SharedPreferences locationShare = getSharedPreferences(CirclesActivity.LOCATION_SHARE_ID, Context.MODE_PRIVATE);
+				Editor editor = locationShare.edit();
+				editor.putString(CirclesActivity.LOCATION_KEY, mStrings[position]);
+				editor.commit();
+				mLocationPlace = mStrings[position];
+				Message message = new Message();   
+				message.what = CirclesService.MSG_Main_Activity;  
+				message.obj = mLocationPlace;
+				handler.sendMessageDelayed(message, 1000);
+			}
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+			// TODO Auto-generated method stub
+
+		}
+	};
 
 	@Override
 	protected void onRestart() {
@@ -156,7 +260,7 @@ public class CirclesActivity extends Activity {
 				locationManager.removeUpdates(this);  
 			}  
 		}  
- 
+
 		public void onStatusChanged(String provider, int status, Bundle extras) {  
 		}  
 		public void onProviderEnabled(String provider) {  
@@ -184,18 +288,19 @@ public class CirclesActivity extends Activity {
 		String placename = "";
 		if (places != null && places.size() > 0) {
 			// placename=((Address)places.get(0)).getLocality();
-			
+
 			//Country: getAddressLine(0),cell: getAddressLine(1), street: getAddressLine(2)
 			placename = ((Address) places.get(0)).getAddressLine(0) + ", " + System.getProperty("line.separator")
 					+ ((Address) places.get(0)).getAddressLine(1) + ", "
 					+ ((Address) places.get(0)).getAddressLine(2);
-			Toast.makeText(this, "your location may be "+placename, Toast.LENGTH_LONG).show();
+			//Toast.makeText(this, "your location may be "+placename, Toast.LENGTH_LONG).show();
 		} else {
-			Toast.makeText(this, "No network", Toast.LENGTH_LONG).show();
+			placename = "";
 		}
 		Log.v("GPSTEST","placename:"+placename); 
 
-		mLocationPlace = getResources().getString(R.string.test_school_item);
+		mLocationPlace = placename;//getResources().getString(R.string.test_school_item);
+		Log.v("GPSTEST","mLocationPlace:"+mLocationPlace); 
 		Editor editor = mSharePreference.edit();
 		editor.putString(LOCATION_KEY, mLocationPlace);
 		editor.commit();
@@ -266,9 +371,8 @@ public class CirclesActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if(pd != null){
-			pd.dismiss();
-			pd = null;
+		if(pb != null){
+			pb = null;
 		}
 		if(gpsListener!=null){  
 			locationManager.removeUpdates(gpsListener);  

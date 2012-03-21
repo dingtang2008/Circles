@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" 
-    android:background="#d1d1d1" >
+    android:background="#d1d1d1"
+    android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -47,7 +47,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#2d2d2d" >
+        android:background="#d1d1d1" >
 
         <ListView
             android:id="@+id/main_userinfo_list"
@@ -57,7 +57,7 @@
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
             android:layout_marginTop="10dip"
-    android:background="#d1d1d1" 
+            android:background="@drawable/maininfolist_bg"
             android:cacheColorHint="@color/forbidden_list_bg"
             android:divider="@drawable/divider_line"
             android:paddingRight="5dip" >
@@ -71,7 +71,7 @@
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
             android:layout_marginTop="30dip"
-    android:background="#d1d1d1" 
+            android:background="@drawable/extrainfolist_bg"
             android:cacheColorHint="@color/forbidden_list_bg"
             android:divider="@drawable/divider_line"
             android:paddingLeft="5dip" >

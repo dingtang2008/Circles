@@ -88,5 +88,9 @@
     <string name="default_search_hint">搜索</string>
     <string name="search_button_description">搜索按钮</string>
     <string name="default_friend_num">共229位好友</string>
+    <string name="back_to_exit">再按一次退出</string>
+    <string name="default_spinner">请选择你所在的大学</string>
+    <string name="start_location">正在定位...</string>
+    <string name="fail_location">定位失败！点击小人重新定位或手动定位</string>
 
 </resources>

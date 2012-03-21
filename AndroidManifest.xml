@@ -53,7 +53,7 @@
             android:theme="@style/XTheme"></activity>
         <activity 
             android:name=".MyFriends"
-            android:theme="@style/XTheme"></activity>
+            android:theme="@android:style/Theme.NoTitleBar"></activity>
         <service android:name=".CircleService" />
     </application>
 
