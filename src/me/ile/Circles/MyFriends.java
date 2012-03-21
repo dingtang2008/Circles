@@ -64,7 +64,7 @@ public class MyFriends extends Activity {
     {
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
+			MainActivity.getscroll().snapToScreen(0);
 			finish();
 		}
     };

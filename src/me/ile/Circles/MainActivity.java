@@ -59,7 +59,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener,
-		OnPanelListener, OnItemClickListener {
+OnPanelListener, OnItemClickListener {
 
 
 	private Animation mShowAction;
@@ -79,6 +79,7 @@ public class MainActivity extends Activity implements OnClickListener,
 	private View headerView;
 	private View loginView;
 	private View userInfoView;
+	private View userMessageView;
 	private Button loginButton;
 	private Panel panelView;
 	private Panel bottomPanel;
@@ -94,7 +95,9 @@ public class MainActivity extends Activity implements OnClickListener,
 	private static final String LOGIN_STATE_KEY = "login_state_key";
 	private static final String LOGIN_STATE_SHARE_ID = "login_state_id";
 	ArrayList<HashMap<String, Object>> lstImageItem;
-	ArrayList<HashMap<String, Object>> users;
+	ArrayList<HashMap<String, Object>> allactivity;
+	ArrayList<HashMap<String, Object>> suggestactivity;
+	HashMap<String, Object>  suggestItem;
 	private static final String PANEL_CONTENT_IMAGE_KEY = "ItemImage";
 	private static final String PANEL_CONTENT_TEXT_KEY = "ItemText";
 	private static int[] mainInfolistItems = { R.string.my_favor_activity,
@@ -193,7 +196,7 @@ public class MainActivity extends Activity implements OnClickListener,
 		initHeaderView();
 
 	}
-	
+
 	public static ScrollLayout getscroll(){
 		return mScrollLayout;
 	}
@@ -361,15 +364,22 @@ public class MainActivity extends Activity implements OnClickListener,
 		mPanelContent.setOnItemClickListener(this);
 
 		// just for test
-		users = new ArrayList<HashMap<String, Object>>();
-		for (int i = 0; i < 10; i++) {
+		String[] allActStrings = getResources().getStringArray(R.array.all_activity);
+		allactivity = new ArrayList<HashMap<String, Object>>();
+		suggestactivity = new ArrayList<HashMap<String, Object>>();
+		suggestItem = new HashMap<String, Object>();
+		for (int i = 0; i < allActStrings.length; i++) {
 			HashMap<String, Object> user = new HashMap<String, Object>();
 			user.put("typeimg", R.drawable.listicon);
-			user.put("activitytitle", this.getString(R.string.test).toString());
-			if (i == 2 || i == 4) {
-				user.put("activityposters", R.drawable.location_bg);
+			user.put("activitytitle", allActStrings[i]);
+			user.put("activityposters", R.drawable.location_bg);
+			if (allActStrings[i].contains(this.getResources().getString(R.string.test))){
+				suggestItem.put("typeimg", R.drawable.listicon);
+				suggestItem.put("activitytitle", allActStrings[i]);
+				suggestItem.put("activityposters", R.drawable.location_bg);
+				suggestactivity.add(suggestItem);
 			}
-			users.add(user);
+			allactivity.add(user);
 		}
 		// just for test
 
@@ -381,7 +391,7 @@ public class MainActivity extends Activity implements OnClickListener,
 				new GetDataTask().execute();
 			}
 		});
-		mainList.setAdapter(new mainListAdapter(this));
+		mainList.setAdapter(new mainListAdapter(this, 0));
 
 
 		headerImage = (ImageView) findViewById(R.id.act_image);
@@ -471,10 +481,12 @@ public class MainActivity extends Activity implements OnClickListener,
 		findViewById(R.id.userView).setOnClickListener(this);
 		findViewById(R.id.mapView).setOnClickListener(this);
 		findViewById(R.id.user_messages).setOnClickListener(this);
+		findViewById(R.id.user_messages2).setOnClickListener(this);
 
 		userView = (LinearLayout) findViewById(R.id.userlayout);
 		loginView = userView.findViewById(R.id.login);
 		userInfoView = userView.findViewById(R.id.userinfo);
+		userMessageView = userView.findViewById(R.id.usermessageview);
 		mLoginUserName = (TextView) userView.findViewById(R.id.eUsername);
 		mLoginPassWord = (TextView) userView.findViewById(R.id.eUserpwd);
 		mLoginUserName.addTextChangedListener(mUserNameChangedListener);
@@ -510,7 +522,7 @@ public class MainActivity extends Activity implements OnClickListener,
 		@Override
 		public void onItemSelected(AdapterView<?> adapter, View view, int position,
 				long id) {
-			sp2.setAdapter(sp.getAdapter());
+			//sp2.setAdapter(spinnerAdapter);
 			SharedPreferences locationShare = getSharedPreferences(CirclesActivity.LOCATION_SHARE_ID, Context.MODE_PRIVATE);
 			Editor editor = locationShare.edit();
 			editor.putString(CirclesActivity.LOCATION_KEY, mStrings[position]);
@@ -524,12 +536,12 @@ public class MainActivity extends Activity implements OnClickListener,
 
 		}
 	};
-	
+
 	OnItemSelectedListener spinnerOnItemSelectedListener2 = new OnItemSelectedListener(){
 		@Override
 		public void onItemSelected(AdapterView<?> adapter, View view, int position,
 				long id) {
-			sp.setAdapter(sp2.getAdapter());
+			//sp.setAdapter(spinnerAdapter);
 			SharedPreferences locationShare = getSharedPreferences(CirclesActivity.LOCATION_SHARE_ID, Context.MODE_PRIVATE);
 			Editor editor = locationShare.edit();
 			editor.putString(CirclesActivity.LOCATION_KEY, mStrings[position]);
@@ -543,7 +555,7 @@ public class MainActivity extends Activity implements OnClickListener,
 
 		}
 	};
-	
+
 	/////////////////////////zhangjingbo
 	private void getUserInfo(String string) {
 		//user_name = getIntent().getStringExtra("user_name");
@@ -561,7 +573,12 @@ public class MainActivity extends Activity implements OnClickListener,
 			sp.setVisibility(View.GONE);
 			actTitleView.setVisibility(View.VISIBLE);
 			actTitleView.setText(mainInfolistItems[position]);
-			mScrollLayout.snapToScreen(mScrollLayout.mDefaultScreen);
+			Log.i("position", "position = "+position);
+			if(position == 3){
+				mScrollLayout.snapToScreen(mScrollLayout.mDefaultScreen + 1);
+			} else{
+				mScrollLayout.snapToScreen(mScrollLayout.mDefaultScreen);
+			}
 		}
 
 	};
@@ -717,6 +734,8 @@ public class MainActivity extends Activity implements OnClickListener,
 		topPanel.setOpen(false, true);
 		headerImage.setBackgroundResource(mImageIdsmall[arg2]);
 		headerText.setText((String) item.get(PANEL_CONTENT_TEXT_KEY));
+		int actid = arg2;
+		mainList.setAdapter(new mainListAdapter(this, actid));
 
 	}
 
@@ -728,19 +747,27 @@ public class MainActivity extends Activity implements OnClickListener,
 		int position;
 	}
 
+	int mActId;
 	private class mainListAdapter extends BaseAdapter {
 		Context mContext;
 		private LayoutInflater mInflater;
 
-		public mainListAdapter(Context context) {
+		public mainListAdapter(Context context, int actid) {
 			mInflater = LayoutInflater.from(context);
 			mContext = context;
+			mActId = actid;
 		}
 
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return users.size();
+			if (mActId == 0){
+				return allactivity.size();
+			}
+			else if (mActId == 1){
+				return suggestactivity.size();
+			} 
+			return 0;
 		}
 
 		@Override
@@ -781,14 +808,24 @@ public class MainActivity extends Activity implements OnClickListener,
 				holder = (ViewHolder) convertView.getTag();
 			}
 
-			String title = (String) users.get(position).get("activitytitle");
-			Integer typeId = (Integer) users.get(position).get("typeimg");
-			Integer postersId = (Integer) users.get(position).get("activityposters");
-			holder.actTitle.setText(title);
-			holder.actType.setImageResource(typeId);
-			if (postersId != null)
-				holder.actPosters.setImageResource(postersId);
+			if (mActId == 0){
+				String title = (String) allactivity.get(position).get("activitytitle");
+				Integer typeId = (Integer) allactivity.get(position).get("typeimg");
+				Integer postersId = (Integer) allactivity.get(position).get("activityposters");
+				holder.actTitle.setText(title);
+				holder.actType.setImageResource(typeId);
+				if (postersId != null)
+					holder.actPosters.setImageResource(postersId);
+			} else if(mActId == 1){
+				String title = (String) suggestactivity.get(position).get("activitytitle");
+				Integer typeId = (Integer) suggestactivity.get(position).get("typeimg");
+				Integer postersId = (Integer) suggestactivity.get(position).get("activityposters");
+				holder.actTitle.setText(title);
+				holder.actType.setImageResource(typeId);
+				if (postersId != null)
+					holder.actPosters.setImageResource(postersId);
 
+			}
 			return convertView;
 		}
 
@@ -1014,7 +1051,7 @@ public class MainActivity extends Activity implements OnClickListener,
 					loginView.setVisibility(View.GONE);
 					userInfoView.setVisibility(View.VISIBLE);
 
-			    	   final EditText use_name = (EditText) findViewById(R.id.eUsername);
+					final EditText use_name = (EditText) findViewById(R.id.eUsername);
 					getUserInfo(use_name.getText().toString());
 					isLogin = true;
 				} else {
@@ -1036,17 +1073,18 @@ public class MainActivity extends Activity implements OnClickListener,
 			mScrollLayout.snapToScreen(2);
 			break;
 		case R.id.user_messages:
+		case R.id.user_messages2:
 			if (isMessagesShow){
 				isMessagesShow = true;
 				userInfoView.startAnimation(mHiddenAction);
 				userInfoView.setVisibility(View.GONE);
-				loginView.startAnimation(mShowAction);
-				loginView.setVisibility(View.VISIBLE);
+				userMessageView.startAnimation(mShowAction);
+				userMessageView.setVisibility(View.VISIBLE);
 			} else {
 				userInfoView.startAnimation(mHiddenAction);
 				userInfoView.setVisibility(View.GONE);
-				loginView.startAnimation(mShowAction);
-				loginView.setVisibility(View.VISIBLE);
+				userMessageView.startAnimation(mShowAction);
+				userMessageView.setVisibility(View.VISIBLE);
 				isMessagesShow = false;
 			}
 			break;
@@ -1062,14 +1100,28 @@ public class MainActivity extends Activity implements OnClickListener,
 
 			Dialog dialog = new Dialog(MainActivity.this, R.style.MyDialog);
 			dialog.setContentView(R.layout.image_dialog);
-			Integer postersId = (Integer) users.get(position).get("activityposters");
-			ImageView mImage = (ImageView)dialog.getWindow().findViewById(R.id.imageViewShow);
+			if (mActId == 0){
+				if(position < allactivity.size()){
+					Integer postersId = (Integer) allactivity.get(position).get("activityposters");
+					ImageView mImage = (ImageView)dialog.getWindow().findViewById(R.id.imageViewShow);
 
-			if (postersId != null){
-				dialog.getWindow().setBackgroundDrawableResource(postersId);
-				dialog.show();
+					if (postersId != null){
+						dialog.getWindow().setBackgroundDrawableResource(postersId);
+						dialog.show();
+					}
+				}
 			}
-			v.setDrawingCacheEnabled(false);
+			else if (mActId == 1){
+				if(position < suggestactivity.size()){
+					Integer postersId = (Integer) suggestactivity.get(position).get("activityposters");
+					ImageView mImage = (ImageView)dialog.getWindow().findViewById(R.id.imageViewShow);
+
+					if (postersId != null){
+						dialog.getWindow().setBackgroundDrawableResource(postersId);
+						dialog.show();
+					}
+				}
+			} 
 			break;
 		case R.id.sort_by_people:
 			sortByPeople.setBackgroundResource(R.drawable.ic_sort_people_press);
@@ -1080,7 +1132,7 @@ public class MainActivity extends Activity implements OnClickListener,
 		case R.id.sort_by_time:
 			sortByTime.setBackgroundResource(R.drawable.ic_sort_time_press);
 			sortByPeople
-					.setBackgroundResource(R.drawable.ic_sort_people_normal);
+			.setBackgroundResource(R.drawable.ic_sort_people_normal);
 			mEditor.putString("sort", "sortByTime");
 			mEditor.commit();
 			break;

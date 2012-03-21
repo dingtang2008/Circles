@@ -12,7 +12,7 @@
     <string name="activity_title">活动标题</string>
     <string name="activity_posters">活动海报</string>
     <string name="location_animation">定位动画</string>
-    <string name="test">活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型活动类型</string>
+    <string name="test">推荐</string>
     
     <string name="str_act_all">所有活动</string>
     <string name="str_act_suggest">推荐活动</string>

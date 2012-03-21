@@ -10,4 +10,16 @@
             <item >学校7</item>
             <item >学校8</item>
         </string-array>
+        <string-array name="all_activity">
+            <item >其他活动1</item>
+            <item >推荐活动2</item>
+            <item >其他活动3</item>
+            <item >活动4</item>
+            <item >推荐活动5</item>
+            <item >其他活动6</item>
+            <item >推荐活动7</item>
+            <item >推荐活动8</item>
+            <item >其他活动9</item>
+            <item >活动10</item>
+        </string-array>
     </resources>

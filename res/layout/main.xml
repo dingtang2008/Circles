@@ -30,6 +30,11 @@
                     android:id="@+id/userinfo"
                     layout="@layout/user_info"
                     android:visibility="gone" />
+                
+                <include
+                    android:id="@+id/usermessageview"
+                    layout="@layout/user_message_view"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
