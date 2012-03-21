@@ -207,7 +207,7 @@ public class ScrollLayout extends ViewGroup {
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
 		// TODO Auto-generated method stub
 		Log.e(TAG, "onInterceptTouchEvent-slop:" + mTouchSlop);
-		if (Panel.mState == Panel.State.TRACKING||PullToRefreshListView.mScrollState==PullToRefreshListView.ScrollState.onScroll)
+		if (Panel.mState == Panel.State.TRACKING)
 			return false;
 		final int action = ev.getAction();
 		if ((action == MotionEvent.ACTION_MOVE)

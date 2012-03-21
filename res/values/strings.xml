@@ -2,7 +2,7 @@
 <resources>
 
     <string name="hello">hello</string>
-    <string name="wait">Please wait to location</string>
+    <string name="wait">请等待定位</string>
     <string name="app_name">Circles</string>
     <string name="sort_by_time">时间排序</string>
     <string name="sort_by_people">人气排序</string>
@@ -13,7 +13,6 @@
     <string name="activity_posters">活动海报</string>
     <string name="location_animation">定位动画</string>
     <string name="test">推荐</string>
-    
     <string name="str_act_all">所有活动</string>
     <string name="str_act_suggest">推荐活动</string>
     <string name="str_act_music">音乐/演出</string>
@@ -46,22 +45,20 @@
     <string name="pull_to_refresh_pull_label">下拉刷新…</string>
     <string name="pull_to_refresh_release_label">松开刷新…</string>
     <string name="pull_to_refresh_refreshing_label">加载中…</string>
-    <string name="pull_to_refresh_tap_label">Tap to refresh…<stri></stri></string>
-    
+    <string name="pull_to_refresh_tap_label">点击刷新…<stri></stri></string>
     <string name="listtitle">ListView</string>
     <string name="maptitle">MapView</string>
-     <string name="shopinfotitle">Shopinfo</string>
+    <string name="shopinfotitle">Shopinfo</string>
     <string name="searchTips">请输入地点或商铺名称</string>
-        <string name="pop">人气：90</string>
-     <string name="activitynumber">活动数：30</string>
+    <string name="pop">人气：90</string>
+    <string name="activitynumber">活动数：30</string>
     <string name="address_temp">聚贤路3弄999号</string>
     <string name="phonenumber">0574-87621321</string>
     <string name="goingactivity">正在进行的活动</string>
     <string name="passedactivity">已经举办过的活动</string>
-        <string name="mark">收藏店铺</string>
+    <string name="mark">收藏店铺</string>
     <string name="take">发布活动</string>
     <string name="suggest">推荐给好友</string>
-    
     <string name="title">标题:</string>
     <string name="title_hint">可输入30字以内的标题</string>
     <string name="summary">简介:</string>

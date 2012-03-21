@@ -53,7 +53,10 @@
             android:theme="@style/XTheme"></activity>
         <activity 
             android:name=".MyFriends"
-            android:theme="@android:style/Theme.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            
+        </activity>
         <service android:name=".CircleService" />
     </application>
 

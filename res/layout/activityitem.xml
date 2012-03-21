@@ -33,9 +33,7 @@
             android:layout_toRightOf="@+id/activity_type"
             android:ellipsize="end"
             android:maxLines="2"
-            android:paddingTop="10dip"
-            android:paddingBottom="5dip"
-            android:paddingLeft="10dip"
+            android:layout_margin="5dip"
             android:textColor="#000000"
             android:text="@string/activity_title" />
 

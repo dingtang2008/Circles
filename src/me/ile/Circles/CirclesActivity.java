@@ -70,7 +70,7 @@ public class CirclesActivity extends Activity {
 			case CirclesService.MSG_Main_Activity:
 				Intent intent = new Intent(CirclesActivity.this,MainActivity.class);
 				intent.putExtra("location", mLocationPlace);
-				if (mLocationPlace.equals("") && isAnimationOn){
+				if (mLocationPlace.equals("") && !isAnimationOn){
 					locationMsg.setText(R.string.fail_location);
 					pb.setVisibility(View.GONE);
 					img.setVisibility(View.VISIBLE);
@@ -78,9 +78,15 @@ public class CirclesActivity extends Activity {
 					spinnerAdapter = new ArrayAdapter<String>(CirclesActivity.this, R.layout.spinner_item, mStrings);
 					spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 					sp.setAdapter(spinnerAdapter);
-					sp.setOnTouchListener(mOnTouchListener);
+					sp.setOnTouchListener(mOnTouchListener2);
 				} else {
 					locationMsg.setText(mLocationPlace);
+					try {
+						Thread.sleep(1800);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					startActivity(intent);
 				}
 				break;
@@ -135,7 +141,7 @@ public class CirclesActivity extends Activity {
 		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp.setAdapter(spinnerAdapter);
 		sp.setOnItemSelectedListener(spinnerOnItemSelectedListener);
-		sp.setOnTouchListener(mOnTouchListener);
+		sp.setOnTouchListener(mOnTouchListener1);
 
 
 		img = (ImageView) findViewById(R.id.anminationtest);
@@ -193,7 +199,17 @@ public class CirclesActivity extends Activity {
 		//					}
 		//				}
 	}
-	OnTouchListener mOnTouchListener = new OnTouchListener() {
+	OnTouchListener mOnTouchListener1 = new OnTouchListener() {
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			if (mLocationPlace.equals("") && !isAnimationOn){
+				spinnerAdapter = new ArrayAdapter<String>(CirclesActivity.this, R.layout.spinner_item, mStrings);
+				return false;
+			}
+			return false;
+		}
+	};
+	OnTouchListener mOnTouchListener2 = new OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 			if (mLocationPlace.equals("") && !isAnimationOn){
@@ -313,7 +329,7 @@ public class CirclesActivity extends Activity {
 		Message message = new Message();   
 		message.what = CirclesService.MSG_Main_Activity;  
 		message.obj = mLocationPlace;
-		handler.sendMessage(message);
+		handler.sendMessageDelayed(message,1000);
 	}  
 
 	private void registerLocationListener(){  
