@@ -111,8 +111,10 @@ public class CirclesActivity extends Activity {
 		}   
 	};
 
+	boolean istimeTaskOn = false;
 	private TimerTask task = new TimerTask(){   
-		public void run() {   
+		public void run() {
+			istimeTaskOn = true;
 			SharedPreferences locationShare = getSharedPreferences(CirclesActivity.LOCATION_SHARE_ID, Context.MODE_PRIVATE);
 			Editor editor = locationShare.edit();
 			editor.putString(CirclesActivity.LOCATION_KEY, "");
@@ -141,11 +143,12 @@ public class CirclesActivity extends Activity {
 		mLocationPlace = mSharePreference.getString(LOCATION_KEY, "");
 		registerLocationListener();
 		sp.setClickable(false);
-		
-		Timer timer = new Timer();   
-		timer.schedule(task, 10000);
 
-		
+		Timer timer = new Timer();   
+		if (!istimeTaskOn)
+			timer.schedule(task, 6000);
+
+
 		mDrawableBg = getResources().getDrawable(R.drawable.location_bg);
 		getWindow().setBackgroundDrawable(mDrawableBg);
 
@@ -187,8 +190,11 @@ public class CirclesActivity extends Activity {
 					img.setVisibility(View.GONE);
 					registerLocationListener();
 					sp.setClickable(false);
-					Timer timer = new Timer();   
-					timer.schedule(task, 10000);
+
+					if (!istimeTaskOn) {
+						Timer timer = new Timer();   
+						timer.schedule(task, 10000);
+					}
 				}
 			}
 		});

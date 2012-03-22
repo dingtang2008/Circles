@@ -7,14 +7,14 @@
 
     <style name="MyCustom" parent="android:style/Theme.Light">
         <item name="android:windowTitleBackgroundStyle">@style/titleBg</item>
-        <item name="android:windowTitleSize">50dp</item>
+        <item name="android:windowTitleSize">45dip</item>
         <item name="android:windowTitleStyle">@style/titleText</item>
     </style>
 
     <style name="titleBg">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">100dip</item>
-        <item name="android:background">#63B2D6</item>
+        <item name="android:layout_height">45dip</item>
+        <item name="android:background">@drawable/title_65</item>
         <item name="android:paddingLeft">20dp</item>
     </style>
 

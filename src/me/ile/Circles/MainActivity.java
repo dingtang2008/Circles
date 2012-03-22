@@ -240,30 +240,31 @@ OnPanelListener, OnItemClickListener {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				HashMap shopinfo=(HashMap)items.get(arg2);
-				if(shopinfo.get("lvw_custom_name")=="���к���"){
+				if(shopinfo.get("lvw_custom_name")=="凡仔汉堡"){
 					Intent shopinfoIntent = new Intent();
 					shopinfoIntent.setClass(MainActivity.this,
 							FoodActivity.class);
 					startActivity(shopinfoIntent);
 				}
-				if(shopinfo.get("lvw_custom_name")=="��̩�ٻ����"){
+				if(shopinfo.get("lvw_custom_name")=="银泰百货江东店"){
 					Intent shopinfoIntent = new Intent();
-					shopinfoIntent.setClass(MainActivity.this, ShopActivity.class);
+					shopinfoIntent.setClass(MainActivity.this,
+							ShopActivity.class);
 					startActivity(shopinfoIntent);
 				}
-				if(shopinfo.get("lvw_custom_name")=="��˹�ؽ�����ֲ�"){
+				if(shopinfo.get("lvw_custom_name")=="菲斯特健身俱乐部"){
 					Intent shopinfoIntent = new Intent();
 					shopinfoIntent.setClass(MainActivity.this,
 							LifeActivity.class);
 					startActivity(shopinfoIntent);
 				}
-				if(shopinfo.get("lvw_custom_name")=="������ͼ���"){
+				if(shopinfo.get("lvw_custom_name")=="江东区图书馆"){
 					Intent shopinfoIntent = new Intent();
 					shopinfoIntent.setClass(MainActivity.this,
 							StudyActivity.class);
 					startActivity(shopinfoIntent);
 				}
-				if(shopinfo.get("lvw_custom_name")=="�����˶���"){
+				if(shopinfo.get("lvw_custom_name")=="明新运动馆"){
 					Intent shopinfoIntent = new Intent();
 					shopinfoIntent.setClass(MainActivity.this,
 							SportActivity.class);
@@ -954,8 +955,8 @@ OnPanelListener, OnItemClickListener {
 			for (int i = 0; i < 100; i++) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("lvw_custom_img", R.drawable.food);
-				map.put("lvw_custom_name", "���к���");
-				map.put("lvw_custom_description", "����·999Ū2��¥");
+				map.put("lvw_custom_name", "凡仔汉堡");
+				map.put("lvw_custom_description", "聚贤路999弄2号楼");
 				items1.add(map);}
 			SimpleAdapter adapter = new SimpleAdapter(this, items1,
 					R.layout.lvw_custom, new String[] { "lvw_custom_img",
@@ -1006,8 +1007,8 @@ OnPanelListener, OnItemClickListener {
 			for (int i = 0; i < 100; i++) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("lvw_custom_img", R.drawable.life);
-				map.put("lvw_custom_name", "�����˶���");
-				map.put("lvw_custom_description", "����·109�Ŵ��·��Ū������");
+				map.put("lvw_custom_name", "明新运动馆");
+				map.put("lvw_custom_description", "卖鱼路109号翠柏路汪弄社区内");
 				items2.add(map);}
 			SimpleAdapter adapter2 = new SimpleAdapter(this, items2,
 					R.layout.lvw_custom, new String[] { "lvw_custom_img",
@@ -1059,8 +1060,8 @@ OnPanelListener, OnItemClickListener {
 			for (int i = 0; i < 100; i++) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("lvw_custom_img", R.drawable.life);
-				map.put("lvw_custom_name", "��˹�ؽ�����ֲ�");
-				map.put("lvw_custom_description", "��������·642��");
+				map.put("lvw_custom_name", "菲斯特健身俱乐部");
+				map.put("lvw_custom_description", "江东区江南路642号");
 				items3.add(map);}
 			SimpleAdapter adapter3= new SimpleAdapter(this, items3,
 					R.layout.lvw_custom, new String[] { "lvw_custom_img",
@@ -1112,8 +1113,8 @@ OnPanelListener, OnItemClickListener {
 			for (int i = 0; i < 100; i++) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("lvw_custom_img", R.drawable.study);
-				map.put("lvw_custom_name", "������ͼ���");
-				map.put("lvw_custom_description", "ɣ��·�߶���Ū16��");
+				map.put("lvw_custom_name", "江东区图书馆");
+				map.put("lvw_custom_description", "桑田路七二二弄16号");
 				items4.add(map);}
 			SimpleAdapter adapter4 = new SimpleAdapter(this, items4,
 					R.layout.lvw_custom, new String[] { "lvw_custom_img",
@@ -1165,8 +1166,8 @@ OnPanelListener, OnItemClickListener {
 			for (int i = 0; i < 100; i++) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("lvw_custom_img", R.drawable.shop);
-				map.put("lvw_custom_name", "��̩�ٻ����");
-				map.put("lvw_custom_description", "�<Ͷ�����ҵ�㳡64��");
+				map.put("lvw_custom_name", "银泰百货江东店");
+				map.put("lvw_custom_description", "世纪东方商业广场64号");
 				items5.add(map);}
 			SimpleAdapter adapter5 = new SimpleAdapter(this, items5,
 					R.layout.lvw_custom, new String[] { "lvw_custom_img",
@@ -1366,29 +1367,29 @@ OnPanelListener, OnItemClickListener {
 		for (int i = 0; i < 100; i++) {
 			if(i%5==0){HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("lvw_custom_img", R.drawable.food);
-			map.put("lvw_custom_name", "���к���");
-			map.put("lvw_custom_description", "����·999Ū2��¥");
+			map.put("lvw_custom_name", "凡仔汉堡");
+			map.put("lvw_custom_description", "聚贤路999弄2号楼");
 			items.add(map);}
 			
 			if(i%5==1){HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("lvw_custom_img", R.drawable.shop);
-			map.put("lvw_custom_name", "��̩�ٻ����");
-			map.put("lvw_custom_description", "�<Ͷ�����ҵ�㳡64��");
+			map.put("lvw_custom_name", "银泰百货江东店");
+			map.put("lvw_custom_description", "世纪东方商业广场64号");
 			items.add(map);}
 			if(i%5==2){HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("lvw_custom_img", R.drawable.life);
-			map.put("lvw_custom_name", "��˹�ؽ�����ֲ�");
-			map.put("lvw_custom_description", "��������·642��");
+			map.put("lvw_custom_name", "菲斯特健身俱乐部");
+			map.put("lvw_custom_description", "江东区江南路642号");
 			items.add(map);}
 			if(i%5==3){HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("lvw_custom_img", R.drawable.study);
-			map.put("lvw_custom_name", "������ͼ���");
-			map.put("lvw_custom_description", "ɣ��·�߶���Ū16��");
+			map.put("lvw_custom_name", "江东区图书馆");
+			map.put("lvw_custom_description", "桑田路七二二弄16号");
 			items.add(map);}
 			if(i%5==4){HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("lvw_custom_img", R.drawable.sport);
-			map.put("lvw_custom_name", "�����˶���");
-			map.put("lvw_custom_description", "����·109�Ŵ��·��Ū������");
+			map.put("lvw_custom_name", "明新运动馆");
+			map.put("lvw_custom_description", "卖鱼路109号翠柏路汪弄社区内");
 			items.add(map);}
 			
 		}
