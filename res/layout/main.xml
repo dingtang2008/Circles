@@ -30,7 +30,7 @@
                     android:id="@+id/userinfo"
                     layout="@layout/user_info"
                     android:visibility="gone" />
-                
+
                 <include
                     android:id="@+id/usermessageview"
                     layout="@layout/user_message_view"
@@ -60,10 +60,12 @@
                         android:id="@+id/mainlist"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/listviewbg"
                         android:cacheColorHint="@color/forbidden_list_bg"
                         android:divider="@null"
-                        android:background="@drawable/listviewbg"
                         android:transcriptMode="normal" />
+
+            
 
                     <me.ile.Panel.Panel
                         android:id="@+id/topPanel"
@@ -101,6 +103,18 @@
                             android:orientation="horizontal" >
                         </LinearLayout>
                     </me.ile.Panel.Panel>
+                            <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="470dip"
+                        android:background="#d1d1d1"
+                        android:orientation="vertical" >
+                        
+                        <ImageView
+                            android:layout_width="40dip"
+                            android:layout_height="40dip"
+                            android:src="@drawable/guide_round" />
+                    </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
 
@@ -108,8 +122,8 @@
                 android:id="@+id/shopllayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="#d1d1d1" >
+                android:background="#d1d1d1"
+                android:orientation="vertical" >
 
                 <include
                     android:id="@+id/shoplayout"
