@@ -50,7 +50,7 @@
             android:contentDescription="@string/activity_posters"
             android:maxHeight="600dip"
             android:maxWidth="380dip"
-            android:paddingBottom="5dip"
+            android:paddingBottom="10dip"
             android:paddingTop="5dip"
             android:src="@drawable/default_user_image" />
     </RelativeLayout>

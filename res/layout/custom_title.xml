@@ -5,9 +5,10 @@
     android:layout_height="wrap_content"
     >
         <ImageView
+            android:id="@+id/back_shoplist"
             android:layout_width="30dip"
             android:layout_height="40dip"
-            android:src="@drawable/left"
+            android:src="@drawable/back"
         ></ImageView>
         <TextView
             android:id="@+id/listtitle"

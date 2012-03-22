@@ -5,9 +5,10 @@
     android:layout_height="wrap_content"
     >
         <ImageView
+            android:id="@+id/back"
             android:layout_width="30dip"
             android:layout_height="40dip"
-            android:src="@drawable/left"
+            android:src="@drawable/back"
         ></ImageView>
         <TextView
             android:id="@+id/shopinfotitle"
@@ -15,7 +16,7 @@
             android:layout_height="40dip"
             android:textColor="#2F0000"
             android:textSize="20dip"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:text="@string/shopinfotitle"
         ></TextView>
 

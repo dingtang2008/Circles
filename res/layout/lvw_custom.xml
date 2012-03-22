@@ -11,8 +11,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center_vertical"
-          android:layout_margin="5dip"    
-          android:background="@drawable/ic_launcher"    
+          android:layout_margin="5dip"     
           />
 
     <LinearLayout
@@ -28,14 +27,16 @@
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
             android:layout_marginTop="5dip"
-            android:textSize="25dip"
+            android:textSize="20dip"
+            android:textColor="#000000"
             android:text="item名称"/>
         <TextView 
             android:id="@+id/lvw_custom_description"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dip"
-            android:textSize="10dip"
+            android:textSize="15dip"
+            android:textColor="#000000"
             android:text="item描述..."/>
     </LinearLayout>
 </LinearLayout>

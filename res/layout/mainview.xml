@@ -3,13 +3,18 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/title_bg"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:gravity="center"
     android:orientation="vertical" >
 
     <Spinner
         android:id="@+id/school_spinner"
         android:layout_width="250dip"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/school_bg"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
     <RelativeLayout
         android:layout_width="fill_parent"

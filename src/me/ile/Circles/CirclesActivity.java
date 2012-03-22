@@ -46,6 +46,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 public class CirclesActivity extends Activity {
 	AnimationDrawable animationDrawable;
 	private boolean isAnimationOn = true;
+	private boolean isStartActivity = false;
 	private Drawable mDrawableBg;
 	private ProgressBar pb;
 	private ImageView iv = null;
@@ -70,15 +71,22 @@ public class CirclesActivity extends Activity {
 			case CirclesService.MSG_Main_Activity:
 				Intent intent = new Intent(CirclesActivity.this,MainActivity.class);
 				intent.putExtra("location", mLocationPlace);
-				if (mLocationPlace.equals("") && !isAnimationOn){
+				if (mLocationPlace.equals("")){
 					locationMsg.setText(R.string.fail_location);
-					pb.setVisibility(View.GONE);
+					if (pb != null)
+						pb.setVisibility(View.GONE);
 					img.setVisibility(View.VISIBLE);
+					try {
+						Thread.sleep(1800);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					isAnimationOn = false;
 					spinnerAdapter = new ArrayAdapter<String>(CirclesActivity.this, R.layout.spinner_item, mStrings);
 					spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 					sp.setAdapter(spinnerAdapter);
-					sp.setOnTouchListener(mOnTouchListener2);
+					sp.setClickable(true);
 				} else {
 					locationMsg.setText(mLocationPlace);
 					try {
@@ -87,7 +95,12 @@ public class CirclesActivity extends Activity {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					startActivity(intent);
+					if (!isStartActivity){
+						isStartActivity = true;
+						startActivity(intent);
+					} else {
+						isStartActivity = false;
+					}
 				}
 				break;
 
@@ -100,9 +113,16 @@ public class CirclesActivity extends Activity {
 
 	private TimerTask task = new TimerTask(){   
 		public void run() {   
+			SharedPreferences locationShare = getSharedPreferences(CirclesActivity.LOCATION_SHARE_ID, Context.MODE_PRIVATE);
+			Editor editor = locationShare.edit();
+			editor.putString(CirclesActivity.LOCATION_KEY, "");
+			editor.commit();
+			isAnimationOn = false;
+			mLocationPlace = "";
 			Message message = new Message();   
-			message.what = CirclesService.MSG_Main_Activity;   
-			handler.sendMessageDelayed(message, 4000);   
+			message.what = CirclesService.MSG_Main_Activity;  
+			message.obj = mLocationPlace;
+			handler.sendMessageDelayed(message, 1000);  
 		}   
 	}; 
 
@@ -114,14 +134,18 @@ public class CirclesActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.mainview);
 
+		sp = (Spinner) findViewById(R.id.school_spinner);
 		pb = (ProgressBar) findViewById(R.id.loading_process_dialog_progressBar);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE); 
 		mSharePreference = this.getSharedPreferences(LOCATION_SHARE_ID, Context.MODE_PRIVATE);
 		mLocationPlace = mSharePreference.getString(LOCATION_KEY, "");
 		registerLocationListener();
-
+		sp.setClickable(false);
+		
 		Timer timer = new Timer();   
+		timer.schedule(task, 10000);
 
+		
 		mDrawableBg = getResources().getDrawable(R.drawable.location_bg);
 		getWindow().setBackgroundDrawable(mDrawableBg);
 
@@ -133,7 +157,6 @@ public class CirclesActivity extends Activity {
 
 		String defaultspinner = getResources().getString(R.string.default_spinner);
 		String[] dftSring = { defaultspinner,};
-		sp = (Spinner) findViewById(R.id.school_spinner);
 		mStrings = getResources().getStringArray(R.array.test_school);
 		spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, dftSring);
 		//ArrayAdapter spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, mStrings);
@@ -141,7 +164,6 @@ public class CirclesActivity extends Activity {
 		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp.setAdapter(spinnerAdapter);
 		sp.setOnItemSelectedListener(spinnerOnItemSelectedListener);
-		sp.setOnTouchListener(mOnTouchListener1);
 
 
 		img = (ImageView) findViewById(R.id.anminationtest);
@@ -164,6 +186,9 @@ public class CirclesActivity extends Activity {
 					pb.setVisibility(View.VISIBLE);
 					img.setVisibility(View.GONE);
 					registerLocationListener();
+					sp.setClickable(false);
+					Timer timer = new Timer();   
+					timer.schedule(task, 10000);
 				}
 			}
 		});
@@ -199,33 +224,14 @@ public class CirclesActivity extends Activity {
 		//					}
 		//				}
 	}
-	OnTouchListener mOnTouchListener1 = new OnTouchListener() {
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-			if (mLocationPlace.equals("") && !isAnimationOn){
-				spinnerAdapter = new ArrayAdapter<String>(CirclesActivity.this, R.layout.spinner_item, mStrings);
-				return false;
-			}
-			return false;
-		}
-	};
-	OnTouchListener mOnTouchListener2 = new OnTouchListener() {
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-			if (mLocationPlace.equals("") && !isAnimationOn){
-				spinnerAdapter = new ArrayAdapter<String>(CirclesActivity.this, R.layout.spinner_item, mStrings);
-				return true;
-			}
-			return false;
-		}
-	};
-	
+
 	OnItemSelectedListener spinnerOnItemSelectedListener = new OnItemSelectedListener(){
 		@Override
 		public void onItemSelected(AdapterView<?> adapter, View view, int position,
 				long id) {
 			if (mLocationPlace.equals("") && !isAnimationOn){
 
+				Log.i("test", "mLocationPlace = "+mLocationPlace);
 				SharedPreferences locationShare = getSharedPreferences(CirclesActivity.LOCATION_SHARE_ID, Context.MODE_PRIVATE);
 				Editor editor = locationShare.edit();
 				editor.putString(CirclesActivity.LOCATION_KEY, mStrings[position]);

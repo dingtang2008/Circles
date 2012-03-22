@@ -97,7 +97,6 @@ OnPanelListener, OnItemClickListener {
 	ArrayList<HashMap<String, Object>> lstImageItem;
 	ArrayList<HashMap<String, Object>> allactivity;
 	ArrayList<HashMap<String, Object>> suggestactivity;
-	HashMap<String, Object>  suggestItem;
 	private static final String PANEL_CONTENT_IMAGE_KEY = "ItemImage";
 	private static final String PANEL_CONTENT_TEXT_KEY = "ItemText";
 	private static int[] mainInfolistItems = { R.string.my_favor_activity,
@@ -125,6 +124,7 @@ OnPanelListener, OnItemClickListener {
 	private String[] mStrings; 
 
 	// add from zhe.lin
+	private ListView lvwCustom ;
 	private ImageView ivComposer;
 	private RotateAnimation clockwiseAm;
 	private RotateAnimation anticlockwiseAm;
@@ -215,8 +215,19 @@ OnPanelListener, OnItemClickListener {
 		 * mapIntent.setClass(MainActivity.this, MapsActivity.class);
 		 * startActivity(mapIntent); finish(); } });
 		 */
-		ListView lvwCustom = (ListView) findViewById(R.id.ListView);
-		ArrayList<HashMap<String, Object>> items = getItems();
+		ImageView mapicon=(ImageView)findViewById(R.id.mapcion);
+		mapicon.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent=new Intent();
+				intent.setClass(MainActivity.this, MapsActivity.class);
+				startActivity(intent);
+				
+			}
+		});
+		lvwCustom = (ListView) findViewById(R.id.ListView);
+		final ArrayList<HashMap<String, Object>> items = getItems();
 		SimpleAdapter adapter = new SimpleAdapter(this, items,
 				R.layout.lvw_custom, new String[] { "lvw_custom_img",
 				"lvw_custom_name", "lvw_custom_description" },
@@ -228,10 +239,36 @@ OnPanelListener, OnItemClickListener {
 
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				Intent shopinfoIntent = new Intent();
-				shopinfoIntent.setClass(MainActivity.this,
-						ShopInfoActivity.class);
-				startActivity(shopinfoIntent);
+				HashMap shopinfo=(HashMap)items.get(arg2);
+				if(shopinfo.get("lvw_custom_name")=="���к���"){
+					Intent shopinfoIntent = new Intent();
+					shopinfoIntent.setClass(MainActivity.this,
+							FoodActivity.class);
+					startActivity(shopinfoIntent);
+				}
+				if(shopinfo.get("lvw_custom_name")=="��̩�ٻ����"){
+					Intent shopinfoIntent = new Intent();
+					shopinfoIntent.setClass(MainActivity.this, ShopActivity.class);
+					startActivity(shopinfoIntent);
+				}
+				if(shopinfo.get("lvw_custom_name")=="��˹�ؽ�����ֲ�"){
+					Intent shopinfoIntent = new Intent();
+					shopinfoIntent.setClass(MainActivity.this,
+							LifeActivity.class);
+					startActivity(shopinfoIntent);
+				}
+				if(shopinfo.get("lvw_custom_name")=="������ͼ���"){
+					Intent shopinfoIntent = new Intent();
+					shopinfoIntent.setClass(MainActivity.this,
+							StudyActivity.class);
+					startActivity(shopinfoIntent);
+				}
+				if(shopinfo.get("lvw_custom_name")=="�����˶���"){
+					Intent shopinfoIntent = new Intent();
+					shopinfoIntent.setClass(MainActivity.this,
+							SportActivity.class);
+					startActivity(shopinfoIntent);
+				}
 			}
 		});
 	}
@@ -367,19 +404,21 @@ OnPanelListener, OnItemClickListener {
 		String[] allActStrings = getResources().getStringArray(R.array.all_activity);
 		allactivity = new ArrayList<HashMap<String, Object>>();
 		suggestactivity = new ArrayList<HashMap<String, Object>>();
-		suggestItem = new HashMap<String, Object>();
+		int id = 0;
 		for (int i = 0; i < allActStrings.length; i++) {
+			id = this.getResources().getIdentifier("test"+i, "drawable", "me.ile.Circles");
 			HashMap<String, Object> user = new HashMap<String, Object>();
+			//HashMap<String, Object>  suggestItem = new HashMap<String, Object>();
 			user.put("typeimg", R.drawable.listicon);
 			user.put("activitytitle", allActStrings[i]);
-			user.put("activityposters", R.drawable.location_bg);
-			if (allActStrings[i].contains(this.getResources().getString(R.string.test))){
-				suggestItem.put("typeimg", R.drawable.listicon);
-				suggestItem.put("activitytitle", allActStrings[i]);
-				suggestItem.put("activityposters", R.drawable.location_bg);
-				suggestactivity.add(suggestItem);
-			}
+			user.put("activityposters", id);
 			allactivity.add(user);
+			if (allActStrings[i].contains(getResources().getString(R.string.test))){
+//				suggestItem.put("typeimg", R.drawable.listicon);
+//				suggestItem.put("activitytitle", allActStrings[i]);
+//				suggestItem.put("activityposters", id);
+				suggestactivity.add(user);
+			}
 		}
 		// just for test
 
@@ -814,7 +853,7 @@ OnPanelListener, OnItemClickListener {
 				Integer postersId = (Integer) allactivity.get(position).get("activityposters");
 				holder.actTitle.setText(title);
 				holder.actType.setImageResource(typeId);
-				if (postersId != null)
+				//if (postersId != null)
 					holder.actPosters.setImageResource(postersId);
 			} else if(mActId == 1){
 				String title = (String) suggestactivity.get(position).get("activitytitle");
@@ -822,7 +861,7 @@ OnPanelListener, OnItemClickListener {
 				Integer postersId = (Integer) suggestactivity.get(position).get("activityposters");
 				holder.actTitle.setText(title);
 				holder.actType.setImageResource(typeId);
-				if (postersId != null)
+				//if (postersId != null)
 					holder.actPosters.setImageResource(postersId);
 
 			}
@@ -910,6 +949,32 @@ OnPanelListener, OnItemClickListener {
 			cameraInTA.setStartOffset(100);
 			ivCamera.startAnimation(cameraInTA);
 			ivCamera.setVisibility(View.GONE);
+			
+			ArrayList<HashMap<String, Object>> items1 = new ArrayList<HashMap<String, Object>>();
+			for (int i = 0; i < 100; i++) {
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("lvw_custom_img", R.drawable.food);
+				map.put("lvw_custom_name", "���к���");
+				map.put("lvw_custom_description", "����·999Ū2��¥");
+				items1.add(map);}
+			SimpleAdapter adapter = new SimpleAdapter(this, items1,
+					R.layout.lvw_custom, new String[] { "lvw_custom_img",
+					"lvw_custom_name", "lvw_custom_description" },
+					new int[] { R.id.lvw_custom_img, R.id.lvw_custom_name,
+					R.id.lvw_custom_description });
+			lvwCustom.setAdapter(adapter);
+//			lvwCustom.setOnItemClickListener(new OnItemClickListener() {
+//
+//				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+//						long arg3) {
+//					Intent shopinfoIntent = new Intent();
+//					shopinfoIntent.putExtra("type", 1);
+//					shopinfoIntent.setClass(MainActivity.this,
+//							ShopInfoActivity.class);
+//					startActivity(shopinfoIntent);
+//				}
+//			});
+//			
 			break;
 		case R.id.ivWith:
 			ivComposer.startAnimation(anticlockwiseAm);
@@ -936,6 +1001,33 @@ OnPanelListener, OnItemClickListener {
 			cameraInTA.setStartOffset(100);
 			ivCamera.startAnimation(cameraInTA);
 			ivCamera.setVisibility(View.GONE);
+			
+			ArrayList<HashMap<String, Object>> items2 = new ArrayList<HashMap<String, Object>>();
+			for (int i = 0; i < 100; i++) {
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("lvw_custom_img", R.drawable.life);
+				map.put("lvw_custom_name", "�����˶���");
+				map.put("lvw_custom_description", "����·109�Ŵ��·��Ū������");
+				items2.add(map);}
+			SimpleAdapter adapter2 = new SimpleAdapter(this, items2,
+					R.layout.lvw_custom, new String[] { "lvw_custom_img",
+					"lvw_custom_name", "lvw_custom_description" },
+					new int[] { R.id.lvw_custom_img, R.id.lvw_custom_name,
+					R.id.lvw_custom_description });
+			lvwCustom.setAdapter(adapter2);
+			
+//			lvwCustom.setOnItemClickListener(new OnItemClickListener() {
+//
+//				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+//						long arg3) {
+//					Intent shopinfoIntent = new Intent();
+//					shopinfoIntent.putExtra("type", 2);
+//					shopinfoIntent.setClass(MainActivity.this,
+//							ShopInfoActivity.class);
+//					startActivity(shopinfoIntent);
+//					
+//				}
+//			});
 			break;
 		case R.id.ivPlace:
 			ivComposer.startAnimation(anticlockwiseAm);
@@ -962,6 +1054,33 @@ OnPanelListener, OnItemClickListener {
 			cameraInTA.setStartOffset(100);
 			ivCamera.startAnimation(cameraInTA);
 			ivCamera.setVisibility(View.GONE);
+			
+			ArrayList<HashMap<String, Object>> items3 = new ArrayList<HashMap<String, Object>>();
+			for (int i = 0; i < 100; i++) {
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("lvw_custom_img", R.drawable.life);
+				map.put("lvw_custom_name", "��˹�ؽ�����ֲ�");
+				map.put("lvw_custom_description", "��������·642��");
+				items3.add(map);}
+			SimpleAdapter adapter3= new SimpleAdapter(this, items3,
+					R.layout.lvw_custom, new String[] { "lvw_custom_img",
+					"lvw_custom_name", "lvw_custom_description" },
+					new int[] { R.id.lvw_custom_img, R.id.lvw_custom_name,
+					R.id.lvw_custom_description });
+			lvwCustom.setAdapter(adapter3);
+//			lvwCustom.setOnItemClickListener(new OnItemClickListener() {
+//
+//				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+//						long arg3) {
+//					Intent shopinfoIntent = new Intent();
+//					shopinfoIntent.putExtra("type", 3);
+//					shopinfoIntent.setClass(MainActivity.this,
+//							ShopInfoActivity.class);
+//					startActivity(shopinfoIntent);
+//					
+//				}
+//			});
+//			
 			break;
 		case R.id.ivThought:
 			ivComposer.startAnimation(anticlockwiseAm);
@@ -988,6 +1107,32 @@ OnPanelListener, OnItemClickListener {
 			cameraInTA.setStartOffset(100);
 			ivCamera.startAnimation(cameraInTA);
 			ivCamera.setVisibility(View.GONE);
+			
+			ArrayList<HashMap<String, Object>> items4= new ArrayList<HashMap<String, Object>>();
+			for (int i = 0; i < 100; i++) {
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("lvw_custom_img", R.drawable.study);
+				map.put("lvw_custom_name", "������ͼ���");
+				map.put("lvw_custom_description", "ɣ��·�߶���Ū16��");
+				items4.add(map);}
+			SimpleAdapter adapter4 = new SimpleAdapter(this, items4,
+					R.layout.lvw_custom, new String[] { "lvw_custom_img",
+					"lvw_custom_name", "lvw_custom_description" },
+					new int[] { R.id.lvw_custom_img, R.id.lvw_custom_name,
+					R.id.lvw_custom_description });
+			lvwCustom.setAdapter(adapter4);
+//			lvwCustom.setOnItemClickListener(new OnItemClickListener() {
+//
+//				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+//						long arg3) {
+//					Intent shopinfoIntent = new Intent();
+//					shopinfoIntent.putExtra("type", 4);
+//					shopinfoIntent.setClass(MainActivity.this,
+//							ShopInfoActivity.class);
+//					startActivity(shopinfoIntent);
+//					
+//				}
+//			});
 			break;
 		case R.id.ivMusic:
 			ivComposer.startAnimation(anticlockwiseAm);
@@ -1014,6 +1159,34 @@ OnPanelListener, OnItemClickListener {
 			cameraInTA.setStartOffset(100);
 			ivCamera.startAnimation(cameraInTA);
 			ivCamera.setVisibility(View.GONE);
+			
+			
+			ArrayList<HashMap<String, Object>> items5= new ArrayList<HashMap<String, Object>>();
+			for (int i = 0; i < 100; i++) {
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("lvw_custom_img", R.drawable.shop);
+				map.put("lvw_custom_name", "��̩�ٻ����");
+				map.put("lvw_custom_description", "�<Ͷ�����ҵ�㳡64��");
+				items5.add(map);}
+			SimpleAdapter adapter5 = new SimpleAdapter(this, items5,
+					R.layout.lvw_custom, new String[] { "lvw_custom_img",
+					"lvw_custom_name", "lvw_custom_description" },
+					new int[] { R.id.lvw_custom_img, R.id.lvw_custom_name,
+					R.id.lvw_custom_description });
+			lvwCustom.setAdapter(adapter5);
+//			lvwCustom.setOnItemClickListener(new OnItemClickListener() {
+//
+//				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+//						long arg3) {
+//					Intent shopinfoIntent = new Intent();
+//					shopinfoIntent.putExtra("type", 5);
+//					shopinfoIntent.setClass(MainActivity.this,
+//							ShopInfoActivity.class);
+//					startActivity(shopinfoIntent);
+//					
+//				}
+//			});
+			
 			break;
 		case R.id.ivSleep:
 			ivComposer.startAnimation(anticlockwiseAm);
@@ -1040,6 +1213,14 @@ OnPanelListener, OnItemClickListener {
 			cameraInTA.setStartOffset(100);
 			ivCamera.startAnimation(cameraInTA);
 			ivCamera.setVisibility(View.GONE);
+			
+			ArrayList<HashMap<String, Object>> items = getItems();
+			SimpleAdapter adapter6 = new SimpleAdapter(this, items,
+					R.layout.lvw_custom, new String[] { "lvw_custom_img",
+					"lvw_custom_name", "lvw_custom_description" },
+					new int[] { R.id.lvw_custom_img, R.id.lvw_custom_name,
+					R.id.lvw_custom_description });
+			lvwCustom.setAdapter(adapter6);
 			break;
 		case R.id.signin_button:
 			Log.i("test", "strUserName ="+strUserName);
@@ -1073,18 +1254,20 @@ OnPanelListener, OnItemClickListener {
 			mScrollLayout.snapToScreen(2);
 			break;
 		case R.id.user_messages:
-		case R.id.user_messages2:
-			if (isMessagesShow){
+			if (!isMessagesShow){
 				isMessagesShow = true;
 				userInfoView.startAnimation(mHiddenAction);
 				userInfoView.setVisibility(View.GONE);
 				userMessageView.startAnimation(mShowAction);
 				userMessageView.setVisibility(View.VISIBLE);
-			} else {
-				userInfoView.startAnimation(mHiddenAction);
-				userInfoView.setVisibility(View.GONE);
-				userMessageView.startAnimation(mShowAction);
-				userMessageView.setVisibility(View.VISIBLE);
+			} 
+			break;
+		case R.id.user_messages2:
+			if (isMessagesShow){
+				userMessageView.startAnimation(mHiddenAction);
+				userMessageView.setVisibility(View.GONE);
+				userInfoView.startAnimation(mShowAction);
+				userInfoView.setVisibility(View.VISIBLE);
 				isMessagesShow = false;
 			}
 			break;
@@ -1094,7 +1277,7 @@ OnPanelListener, OnItemClickListener {
 			//           // bundle.putString("imgSrc", imgSrc);
 			//            intent.putExtras(bundle);
 			//            startActivity(intent);
-			int position = mainList.getPositionForView((View)v.getParent());
+			int position = mainList.getPositionForView((View)v.getParent()) - 1;
 
 			Log.i("test", "position = "+position);
 
@@ -1105,10 +1288,10 @@ OnPanelListener, OnItemClickListener {
 					Integer postersId = (Integer) allactivity.get(position).get("activityposters");
 					ImageView mImage = (ImageView)dialog.getWindow().findViewById(R.id.imageViewShow);
 
-					if (postersId != null){
+					//if (postersId != null){
 						dialog.getWindow().setBackgroundDrawableResource(postersId);
 						dialog.show();
-					}
+					//}
 				}
 			}
 			else if (mActId == 1){
@@ -1116,10 +1299,10 @@ OnPanelListener, OnItemClickListener {
 					Integer postersId = (Integer) suggestactivity.get(position).get("activityposters");
 					ImageView mImage = (ImageView)dialog.getWindow().findViewById(R.id.imageViewShow);
 
-					if (postersId != null){
+					//if (postersId != null){
 						dialog.getWindow().setBackgroundDrawableResource(postersId);
 						dialog.show();
-					}
+					//}
 				}
 			} 
 			break;
@@ -1181,11 +1364,33 @@ OnPanelListener, OnItemClickListener {
 	private ArrayList<HashMap<String, Object>> getItems() {
 		ArrayList<HashMap<String, Object>> items = new ArrayList<HashMap<String, Object>>();
 		for (int i = 0; i < 100; i++) {
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("lvw_custom_img", R.drawable.ic_launcher);
-			map.put("lvw_custom_name", "itemname");
-			map.put("lvw_custom_description", "itemdes");
-			items.add(map);
+			if(i%5==0){HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("lvw_custom_img", R.drawable.food);
+			map.put("lvw_custom_name", "���к���");
+			map.put("lvw_custom_description", "����·999Ū2��¥");
+			items.add(map);}
+			
+			if(i%5==1){HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("lvw_custom_img", R.drawable.shop);
+			map.put("lvw_custom_name", "��̩�ٻ����");
+			map.put("lvw_custom_description", "�<Ͷ�����ҵ�㳡64��");
+			items.add(map);}
+			if(i%5==2){HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("lvw_custom_img", R.drawable.life);
+			map.put("lvw_custom_name", "��˹�ؽ�����ֲ�");
+			map.put("lvw_custom_description", "��������·642��");
+			items.add(map);}
+			if(i%5==3){HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("lvw_custom_img", R.drawable.study);
+			map.put("lvw_custom_name", "������ͼ���");
+			map.put("lvw_custom_description", "ɣ��·�߶���Ū16��");
+			items.add(map);}
+			if(i%5==4){HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("lvw_custom_img", R.drawable.sport);
+			map.put("lvw_custom_name", "�����˶���");
+			map.put("lvw_custom_description", "����·109�Ŵ��·��Ū������");
+			items.add(map);}
+			
 		}
 		return items;
 	}

@@ -108,8 +108,8 @@
                 android:id="@+id/shopllayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#FF00"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:background="#d1d1d1" >
 
                 <include
                     android:id="@+id/shoplayout"

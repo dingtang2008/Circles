@@ -60,6 +60,15 @@ public class MapsActivity extends Activity implements OnGestureListener{
 		TextView maptitleTextView=(TextView)findViewById(R.id.listtitle);
 		maptitleTextView.setText(R.string.maptitle);
 		
+		ImageView backImageView=(ImageView)findViewById(R.id.back_shoplist);
+		backImageView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+				
+			}
+		});
 		ImageView mapsview=(ImageView)findViewById(R.id.mapsview);
         mapsview.setOnClickListener(new OnClickListener() {
 			
