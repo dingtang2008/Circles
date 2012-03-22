@@ -77,7 +77,7 @@ public class CirclesActivity extends Activity {
 						pb.setVisibility(View.GONE);
 					img.setVisibility(View.VISIBLE);
 					try {
-						Thread.sleep(1800);
+						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

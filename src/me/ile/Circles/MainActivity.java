@@ -159,7 +159,7 @@ OnPanelListener, OnItemClickListener {
 	private long exitTime = 0;
 	private SharedPreferences sharedPreferences;
 	private SharedPreferences.Editor mEditor;
-
+	private MainListAdapter mainListAdapter;
 	private enum extraItem {
 		MY_FRIENDS((int) 0),
 		MY_CIRCLES((int) 1);
@@ -194,6 +194,7 @@ OnPanelListener, OnItemClickListener {
 		init();
 		initshoplayout();
 		initHeaderView();
+		 mainListAdapter = new MainListAdapter(this);
 
 	}
 
@@ -431,7 +432,7 @@ OnPanelListener, OnItemClickListener {
 				new GetDataTask().execute();
 			}
 		});
-		mainList.setAdapter(new mainListAdapter(this, 0));
+		mainList.setAdapter(new MainListAdapter(this, 0));
 
 
 		headerImage = (ImageView) findViewById(R.id.act_image);
@@ -733,12 +734,13 @@ OnPanelListener, OnItemClickListener {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_T) {
-			topPanel.setOpen(!topPanel.isOpen(), false);
+		if (keyCode == KeyEvent.KEYCODE_T ) {
+			topPanel.setOpen(!topPanel.isOpen(), true);
 			return false;
 		}
-		if (keyCode == KeyEvent.KEYCODE_B) {
-			bottomPanel.setOpen(!bottomPanel.isOpen(), true);
+		if (keyCode == KeyEvent.KEYCODE_MENU) {
+			if(mCurSel==1)
+			topPanel.setOpen(false, true);
 			return false;
 		}
 		if (keyCode == KeyEvent.KEYCODE_BACK
@@ -774,9 +776,8 @@ OnPanelListener, OnItemClickListener {
 		topPanel.setOpen(false, true);
 		headerImage.setBackgroundResource(mImageIdsmall[arg2]);
 		headerText.setText((String) item.get(PANEL_CONTENT_TEXT_KEY));
-		int actid = arg2;
-		mainList.setAdapter(new mainListAdapter(this, actid));
-
+		mainListAdapter.setmActId(arg2);
+		mainList.setAdapter(mainListAdapter);
 	}
 
 	static class ViewHolder {
@@ -787,15 +788,27 @@ OnPanelListener, OnItemClickListener {
 		int position;
 	}
 
-	int mActId;
-	private class mainListAdapter extends BaseAdapter {
+	private class MainListAdapter extends BaseAdapter {
 		Context mContext;
 		private LayoutInflater mInflater;
+		private int mActId;
 
-		public mainListAdapter(Context context, int actid) {
+		public MainListAdapter(Context context) {
+			mInflater = LayoutInflater.from(context);
+			mContext = context;
+		}
+		
+		public MainListAdapter(Context context, int actid) {
 			mInflater = LayoutInflater.from(context);
 			mContext = context;
 			mActId = actid;
+		}
+		public int getmActId() {
+			return mActId;
+		}
+
+		public void setmActId(int mActId) {
+			this.mActId = mActId;
 		}
 
 		@Override
@@ -1284,7 +1297,7 @@ OnPanelListener, OnItemClickListener {
 
 			Dialog dialog = new Dialog(MainActivity.this, R.style.MyDialog);
 			dialog.setContentView(R.layout.image_dialog);
-			if (mActId == 0){
+			if (mainListAdapter.getmActId() == 0) {
 				if(position < allactivity.size()){
 					Integer postersId = (Integer) allactivity.get(position).get("activityposters");
 					ImageView mImage = (ImageView)dialog.getWindow().findViewById(R.id.imageViewShow);
@@ -1293,9 +1306,9 @@ OnPanelListener, OnItemClickListener {
 						dialog.getWindow().setBackgroundDrawableResource(postersId);
 						dialog.show();
 					//}
+				
 				}
-			}
-			else if (mActId == 1){
+			} else if (mainListAdapter.getmActId() == 1) {
 				if(position < suggestactivity.size()){
 					Integer postersId = (Integer) suggestactivity.get(position).get("activityposters");
 					ImageView mImage = (ImageView)dialog.getWindow().findViewById(R.id.imageViewShow);
@@ -1312,6 +1325,10 @@ OnPanelListener, OnItemClickListener {
 			sortByTime.setBackgroundResource(R.drawable.ic_sort_time_normal);
 			mEditor.putString("sort", "sortByPeople");
 			mEditor.commit();
+			if (mainListAdapter != null) {
+				mainListAdapter.setmActId(0);
+				mainList.setAdapter(mainListAdapter);
+			}
 			break;
 		case R.id.sort_by_time:
 			sortByTime.setBackgroundResource(R.drawable.ic_sort_time_press);
@@ -1319,6 +1336,10 @@ OnPanelListener, OnItemClickListener {
 			.setBackgroundResource(R.drawable.ic_sort_people_normal);
 			mEditor.putString("sort", "sortByTime");
 			mEditor.commit();
+			if (mainListAdapter != null) {
+				mainListAdapter.setmActId(1);
+				mainList.setAdapter(mainListAdapter);
+			}
 			break;
 		}
 	}
